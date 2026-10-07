@@ -1,32 +1,33 @@
-# candlebot
+# candlebot (forex edition)
 
-A small candlestick trading bot: backtester + paper-trading signal generator. **It never places real orders.**
+A small candlestick bot for FX majors: backtester + paper-trading signal generator. **It never places real orders.**
 
 ## Run it
 ```
 pip install pandas numpy yfinance
-python candlebot.py backtest                 # 10y daily bars on SPY QQQ AAPL MSFT NVDA, starts with £20
-python candlebot.py backtest --tickers VOD.L LLOY.L SHEL.L
-python candlebot.py paper                    # run once a day after the close; prints tomorrow's orders
+python candlebot.py backtest                       # 10y daily bars: EURUSD GBPUSD USDJPY AUDUSD USDCAD EURGBP
+python candlebot.py backtest --pairs EURUSD GBPJPY --leverage 3
+python candlebot.py paper                          # run once a day after the close; prints tomorrow's orders
 ```
 `paper` keeps `paper_state.json`, so you can follow it for 60-90 days and compare with the backtest.
 
-## The strategy
-1. **Trend filter** - only buy when close > 50-day average (Elder, Weinstein, Minervini).
-2. **Pattern** - hammer, bullish engulfing, piercing line or morning star after a short dip (Nison).
-3. **Confirmation** - next candle must close above the pattern's high (Nison).
-4. **Entry** at the following open. **Stop** below the pattern low minus half an ATR.
-5. **Exit** at 2R target, bearish pattern (shooting star / bearish engulfing / evening star), or after 10 bars.
-6. **Risk** - 2% of equity per trade, max 3 positions, no leverage, no averaging down (Tharp, Turtles, Douglas).
+## Strategy (trades both directions)
+1. **Trend filter** - long only above the 50-day average, short only below it (Elder, Weinstein).
+2. **Pattern** - long: hammer, bullish engulfing, piercing line, morning star. Short: shooting star, bearish engulfing, dark-cloud cover, evening star (Nison).
+3. **Confirmation** - next candle must close beyond the pattern's high (long) or low (short).
+4. **Entry** at the next open. **Stop** beyond the pattern extreme by half an ATR. **Target** 2R.
+5. **Exit** also on an opposite-direction pattern, or after 10 bars.
+6. **Risk** - 2% of equity per trade, max 3 positions, leverage capped at 5:1 (Tharp, Turtles, Douglas).
 7. **Circuit breaker** - no new trades after a 30% drawdown from peak.
-8. **Costs** - 0.2% per side is charged, because costs kill small accounts.
+8. **Costs** - per-pair spreads in pips (EURUSD 1.0, GBPJPY 2.5, ...) plus 0.005%/day overnight financing.
 
 ## Honest notes
-- I can't read books in full; this encodes the widely documented rules from Nison's *Japanese Candlestick Charting
-  Techniques*, Elder, Tharp, Douglas, the Turtle rules and Schwager's *Market Wizards*.
-- Candlestick patterns have modest, inconsistent edge in academic tests, and the edge often disappears after costs.
-  Backtest on real data before you believe anything. On random synthetic data this bot loses slightly, as it should.
-- £20 is a learning budget. At 2% risk you risk about 40p per trade, so expect single-digit pounds of movement
-  in 90 days. Doubling it would mean a lucky streak, not a plan. Don't expect to, and never add money to "catch up".
-- Real-money notes (UK): you need a broker with fractional shares and no minimum fee (e.g. Trading 212, Freetrade).
-  Avoid leverage/CFDs at this size. Tax and fees aren't modelled. This is not financial advice.
+- Position size is "notional in GBP"; return on notional is currency-independent, so the account is kept in GBP
+  without converting each pair. It ignores interest-rate differentials (real swap can help or hurt) and weekend gaps beyond the open.
+- Candlestick patterns have modest, inconsistent edge in academic tests; forex spreads can erase it. On random
+  synthetic data this bot loses slightly, as it should. Backtest on real data first.
+- Leverage is the danger. 30:1 lets a £20 account hold £600 of currency; a 3% move against you wipes it out.
+  Keep it at 5:1 or less.
+- At £20 and 5:1 you can hold roughly £100 notional. You need a broker allowing tiny sizes (e.g. Oanda trades in single units).
+  Many UK brokers have minimum lot sizes that make 2% risk impossible at this balance. Check before depositing.
+- Retail FX CFD/spread-bet accounts: most retail clients lose money. This is a learning exercise, not financial advice.
