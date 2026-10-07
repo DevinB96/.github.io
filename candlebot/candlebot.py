@@ -13,7 +13,9 @@ Usage:
   python candlebot.py backtest --pairs EURUSD GBPUSD
   python candlebot.py backtest --csv EURUSD.csv         # CSV: date,open,high,low,close
   python candlebot.py backtest --synthetic              # offline smoke test
+  python candlebot.py backtest --tf 1h                  # hourly candles (Yahoo gives ~2 years)
   python candlebot.py paper                             # run daily after the 22:00 UK close
+  python candlebot.py paper --tf 1h                     # run every hour, a minute after the hour
 """
 import argparse, json, os, sys
 from dataclasses import dataclass
@@ -39,6 +41,18 @@ class Config:
     swap_pct_day: float = 0.00005 # 0.005%/day of notional paid as overnight financing (conservative)
     halt_drawdown: float = 0.30
     min_notional: float = 5.0     # GBP; ignore dust positions
+    bars_per_day: int = 1         # 1 = daily candles, 24 = hourly candles (FX trades 24h, Mon-Fri)
+    no_entry_hours: tuple = ()    # hours (data timezone) when no new entries are opened
+
+def make_config(tf, **kw):
+    """Daily and hourly need different settings: hourly noise is higher relative to costs, so use a
+    longer trend filter, hold for up to 2 days, and skip entries around the 22:00 UK rollover when
+    spreads widen."""
+    cfg = Config(**kw)
+    if tf == "1h":
+        cfg.bars_per_day, cfg.trend_sma, cfg.max_hold = 24, 200, 48
+        cfg.no_entry_hours = (21, 22, 23)
+    return cfg
 
 def pip(pair): return 0.01 if "JPY" in pair else 0.0001
 def half_spread(pair, px): return SPREAD_PIPS.get(pair, DEFAULT_SPREAD) * pip(pair) / 2
@@ -127,7 +141,7 @@ def backtest(data: dict, cfg: Config):
             if px is None and ((s == 1 and r.bear) or (s == -1 and r.bull)): p["exit_next"] = True
             if px is not None:
                 net = px - s * half_spread(t, px)
-                pnl = p["n"] * s * (net / p["entry"] - 1) - p["n"] * cfg.swap_pct_day * max(p["age"], 1)
+                pnl = p["n"] * s * (net / p["entry"] - 1) - p["n"] * cfg.swap_pct_day * max(p["age"], 1) / cfg.bars_per_day
                 cash += pnl
                 trades.append(dict(pair=t, side="long" if s == 1 else "short", pattern=p["pattern"],
                                    opened=p["opened"], closed=dt, entry=p["entry"], exit=net,
@@ -139,6 +153,7 @@ def backtest(data: dict, cfg: Config):
             if t in pos or len(pos) >= cfg.max_positions or dt not in d.index: continue
             i = d.index.get_loc(dt)
             if i < cfg.trend_sma + 3 or i + 1 >= len(d): continue
+            if getattr(d.index[i + 1], "hour", 0) in cfg.no_entry_hours: continue
             sg = entry_signal(d, i, cfg)
             if not sg: continue
             s, stop, name = sg
@@ -160,21 +175,21 @@ def report(trades, curve, cfg):
           f"final £{curve.iloc[-1]:.2f} ({ret:+.1%}) | max drawdown {dd:.1%}")
     print(trades.groupby("side").agg(n=("r", "size"), avg_R=("r", "mean")).round(2).to_string())
     print(trades.groupby("pattern").agg(n=("r", "size"), avg_R=("r", "mean")).round(2).to_string())
-    w = 63                                                           # ~90 calendar days
+    w = 63 * cfg.bars_per_day                                        # ~90 calendar days
     if len(curve) > w + 10:
         roll = (curve.shift(-w) / curve).dropna() * cfg.start_cash
         q = roll.quantile([.05, .25, .5, .75, .95])
-        print(f"\nRolling {w}-trading-day outcomes from £{cfg.start_cash:.0f} (every start date in history):")
+        print(f"\nRolling {w}-bar (~90 day) outcomes from £{cfg.start_cash:.0f} (every start date in history):")
         print("  5th £%.2f | 25th £%.2f | median £%.2f | 75th £%.2f | 95th £%.2f" % tuple(q.values))
         print(f"  windows ending below start: {(roll < cfg.start_cash).mean():.0%}")
 
 # ------------------------------------------------------------------- data
-def load_yf(pairs, years=10):
+def load_yf(pairs, tf="1d"):
     try: import yfinance as yf
     except ImportError: sys.exit("pip install yfinance  (or use --csv / --synthetic)")
     out = {}
     for p in pairs:
-        df = yf.download(f"{p}=X", period=f"{years}y", interval="1d", auto_adjust=True, progress=False)
+        df = yf.download(f"{p}=X", period="10y" if tf == "1d" else "729d", interval=tf, auto_adjust=True, progress=False)
         if df.empty: continue
         df.columns = [str(c[0] if isinstance(c, tuple) else c).lower() for c in df.columns]
         out[p] = df[["open", "high", "low", "close"]].dropna()
@@ -185,14 +200,21 @@ def load_csv(path):
     df.columns = [c.lower() for c in df.columns]
     return {os.path.basename(path).split(".")[0].upper(): df[["open", "high", "low", "close"]].dropna()}
 
-def synthetic(days=1500, seed=1):
+def synthetic(days=1500, seed=1, tf="1d"):
     rng = np.random.default_rng(seed); out = {}
-    idx = pd.bdate_range("2019-01-01", periods=days)
+    if tf == "1h":
+        days = 24 * 700
+        idx = pd.date_range("2023-01-02", periods=days * 7 // 5 + 48, freq="h")
+        idx = idx[idx.dayofweek < 5][:days]
+        vol, wick, gap = 0.0055 / 24 ** .5, 0.0010, 0.0001
+    else:
+        idx = pd.bdate_range("2019-01-01", periods=days)
+        vol, wick, gap = 0.0055, 0.0025, 0.0004
     for name, start in [("EURUSD", 1.10), ("GBPUSD", 1.30), ("USDJPY", 110.0), ("AUDUSD", 0.70)]:
-        close = start * np.exp(np.cumsum(rng.normal(0, 0.0055, days)))
-        op = np.r_[start, close[:-1]] * (1 + rng.normal(0, 0.0004, days))
-        hi = np.maximum(op, close) * (1 + abs(rng.normal(0, 0.0025, days)))
-        lo = np.minimum(op, close) * (1 - abs(rng.normal(0, 0.0025, days)))
+        close = start * np.exp(np.cumsum(rng.normal(0, vol, days)))
+        op = np.r_[start, close[:-1]] * (1 + rng.normal(0, gap, days))
+        hi = np.maximum(op, close) * (1 + abs(rng.normal(0, wick, days)))
+        lo = np.minimum(op, close) * (1 - abs(rng.normal(0, wick, days)))
         out[name] = pd.DataFrame(dict(open=op, high=hi, low=lo, close=close), index=idx)
     return out
 
@@ -216,6 +238,8 @@ def paper(data, cfg):
     st["peak"] = max(st["peak"], eq)
     if eq >= st["peak"] * (1 - cfg.halt_drawdown):
         for t, d in pdata.items():
+            nxt_hour = (getattr(d.index[-1], "hour", -1) + 1) % 24 if cfg.bars_per_day > 1 else -1
+            if nxt_hour in cfg.no_entry_hours: continue
             if t in st["pos"] or len(st["pos"]) >= cfg.max_positions or len(d) < cfg.trend_sma + 3: continue
             sg = entry_signal(d, len(d) - 1, cfg)
             if not sg: continue
@@ -239,9 +263,10 @@ def main():
     ap.add_argument("--csv"); ap.add_argument("--synthetic", action="store_true")
     ap.add_argument("--cash", type=float, default=20.0); ap.add_argument("--risk", type=float, default=0.02)
     ap.add_argument("--leverage", type=float, default=5.0)
+    ap.add_argument("--tf", choices=["1d", "1h"], default="1d", help="candle timeframe (default 1d)")
     a = ap.parse_args()
-    cfg = Config(start_cash=a.cash, risk_pct=a.risk, max_leverage=a.leverage)
-    data = synthetic() if a.synthetic else load_csv(a.csv) if a.csv else load_yf(a.pairs)
+    cfg = make_config(a.tf, start_cash=a.cash, risk_pct=a.risk, max_leverage=a.leverage)
+    data = synthetic(tf=a.tf) if a.synthetic else load_csv(a.csv) if a.csv else load_yf(a.pairs, a.tf)
     if a.mode == "backtest": report(*backtest(data, cfg), cfg)
     else: paper(data, cfg)
 

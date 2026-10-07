@@ -12,16 +12,18 @@ def main():
     ap.add_argument("--pairs", nargs="+", default=["EURUSD", "GBPUSD", "USDJPY", "AUDUSD"])
     ap.add_argument("--csv"); ap.add_argument("--synthetic", action="store_true")
     ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--tf", choices=["1d", "1h"], default="1d")
     ap.add_argument("--trade", type=int, default=0, help="index into the trade list")
     ap.add_argument("--out", default="trade.png")
     a = ap.parse_args()
-    cfg = cb.Config()
-    data = cb.synthetic(seed=a.seed) if a.synthetic else cb.load_csv(a.csv) if a.csv else cb.load_yf(a.pairs)
+    cfg = cb.make_config(a.tf)
+    data = cb.synthetic(seed=a.seed, tf=a.tf) if a.synthetic else cb.load_csv(a.csv) if a.csv else cb.load_yf(a.pairs, a.tf)
     trades, _ = cb.backtest(data, cfg)
     t = trades.iloc[a.trade]
     d = cb.add_patterns(data[t.pair], cfg)
     i0, i1 = d.index.get_loc(t.opened), d.index.get_loc(t.closed)
-    w = d.iloc[max(i0 - 12, 0): i1 + 5]
+    pad = 12 if a.tf == '1d' else 30
+    w = d.iloc[max(i0 - pad, 0): i1 + pad // 3]
     s = 1 if t.side == "long" else -1
     # recompute stop/target the way the backtest did
     sig = d.iloc[i0 - 2]
@@ -43,7 +45,8 @@ def main():
                 arrowprops=dict(arrowstyle="->", color=mut), fontsize=9, color=ink)
     ax.plot(xs[t.opened], t.entry, "^" if s == 1 else "v", color=ink, ms=10, label=f"entry {t.entry:.5g}")
     ax.plot(xs[t.closed], t.exit, "x", color=ink, ms=10, mew=2, label=f"exit {t.exit:.5g}")
-    ax.set_xticks(range(0, len(w), 3)); ax.set_xticklabels([x.strftime("%d %b") for x in w.index[::3]], fontsize=8)
+    step = 3 if a.tf == '1d' else 6
+    ax.set_xticks(range(0, len(w), step)); ax.set_xticklabels([x.strftime("%d %b" if a.tf == "1d" else "%d %b %H:%M") for x in w.index[::step]], fontsize=8)
     ax.set_title(f"{t.pair} {t.side.upper()}  |  result {t.r:+.2f}R  (£{t.pnl:+.2f} on a £20 account)", loc="left")
     ax.legend(frameon=False, loc="best"); ax.spines[["top", "right"]].set_visible(False)
     fig.tight_layout(); fig.savefig(a.out, dpi=130)
