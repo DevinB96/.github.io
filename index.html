@@ -3,220 +3,337 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brooks Process Solutions | AI Consulting for Operations, Marketing &amp; Sales</title>
-<meta name="description" content="Brooks Process Solutions helps businesses implement AI across operations, marketing, sales and lead generation, so you save time, win more customers and scale without adding headcount.">
-<meta name="theme-color" content="#0b1220">
+<title>Brooks Process Solutions | AI Implementation Consulting</title>
+<meta name="description" content="Brooks Process Solutions maps your workflows and implements AI across operations, marketing, sales and lead generation, so work that used to take people hours runs on its own.">
+<meta name="theme-color" content="#f1ece1">
 <meta property="og:title" content="Brooks Process Solutions | AI Implementation Consulting">
-<meta property="og:description" content="Practical AI implementation across operations, marketing, sales and lead generation.">
+<meta property="og:description" content="We map the process, then put AI to work in it: operations, marketing, sales and lead generation.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b1220; --bg2:#101a2e; --card:#14203a; --line:#22314f;
-  --text:#e8edf7; --muted:#9fb0cc; --accent:#4ade80; --accent2:#38bdf8;
-  --radius:16px;
+  --paper:#f1ece1; --paper2:#e8e1d2; --ink:#15181d; --ink2:#4a4f58; --rule:#15181d22;
+  --accent:#d9481c; --deep:#16382f;
+  --serif:"Fraunces",Georgia,serif; --sans:"Inter Tight",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(var(--rule) 1px,transparent 1px);background-size:28px 28px}
 a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-h1,h2,h3{line-height:1.15;margin:0 0 .5em;letter-spacing:-.02em}
-h1{font-size:clamp(2.2rem,5.5vw,4rem)}
-h2{font-size:clamp(1.7rem,3.5vw,2.5rem)}
-h3{font-size:1.2rem}
-p{margin:0 0 1em;color:var(--muted)}
-.grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.eyebrow{display:inline-block;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:12px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.025em;line-height:1.05;margin:0}
+h1{font-size:clamp(2.8rem,7vw,5.6rem)}
+h2{font-size:clamp(2rem,4.4vw,3.4rem)}
+h3{font-size:1.5rem}
+em{font-style:italic;color:var(--accent)}
+p{margin:0 0 1em;color:var(--ink2)}
+.tag{display:inline-flex;gap:10px;align-items:center;color:var(--ink2)}
+.tag::before{content:"";width:28px;height:1px;background:var(--ink)}
 
 /* header */
-header{position:sticky;top:0;z-index:10;background:rgba(11,18,32,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-weight:800;text-decoration:none;letter-spacing:-.02em}
-.logo span{color:var(--accent)}
-nav{display:flex;gap:22px;align-items:center}
-nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
-nav a:hover{color:var(--text)}
-.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:transform .15s}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#04101f}
-.btn-ghost{border:1px solid var(--line);color:var(--text)}
-nav .btn{padding:9px 18px;color:#04101f;font-size:.9rem}
-@media(max-width:760px){nav a:not(.btn){display:none}}
+header{position:sticky;top:0;z-index:20;background:#f1ece1ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--ink)}
+.bar{display:flex;justify-content:space-between;align-items:center;height:68px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--serif);font-size:1.25rem;letter-spacing:-.02em}
+.logo i{width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font:600 .85rem var(--serif);font-style:normal;position:relative}
+.logo i::after{content:"";position:absolute;right:-5px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:var(--accent)}
+nav{display:flex;gap:28px;align-items:center}
+nav a{text-decoration:none;font-size:.95rem}
+nav a:not(.btn):hover{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);text-decoration:none;font-weight:500;cursor:pointer;font:500 1rem var(--sans);transition:.2s}
+.btn:hover{background:var(--accent);border-color:var(--accent)}
+.btn.out{background:transparent;color:var(--ink)}
+.btn.out:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+nav .btn{padding:9px 18px;font-size:.9rem}
+@media(max-width:820px){nav a:not(.btn){display:none}}
+@media(max-width:520px){.logo{font-size:1rem;white-space:nowrap;gap:9px}.logo i{width:26px;height:26px}nav .btn{padding:8px 12px;font-size:.82rem;white-space:nowrap}}
 
 /* hero */
-.hero{padding:96px 0 72px;background:radial-gradient(800px 400px at 80% -10%,rgba(56,189,248,.18),transparent),radial-gradient(700px 400px at 0% 0%,rgba(74,222,128,.12),transparent)}
-.hero p.lead{font-size:1.2rem;max-width:640px}
-.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
-.chip{border:1px solid var(--line);background:var(--bg2);padding:6px 14px;border-radius:999px;font-size:.85rem;color:var(--muted)}
+.hero{padding:76px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+@media(max-width:940px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{margin:22px 0 28px}
+.hero p.lead{font-size:1.2rem;max-width:560px;color:var(--ink)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
 
-section{padding:80px 0}
-.alt{background:var(--bg2);border-block:1px solid var(--line)}
-.head{max-width:680px;margin-bottom:44px}
+/* flow diagram */
+.diagram{border:1.5px solid var(--ink);background:var(--paper);box-shadow:10px 10px 0 var(--ink);padding:18px}
+.diagram .cap{display:flex;justify-content:space-between;color:var(--ink2);padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.diagram svg{width:100%;height:auto;display:block}
+.node rect{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.node text{font:500 11px var(--mono);fill:var(--ink);letter-spacing:.06em}
+.node.ai rect{fill:var(--ink)}
+.node.ai text{fill:var(--paper)}
+.node.out rect{fill:var(--accent);stroke:var(--accent)}
+.node.out text{fill:#fff}
+.wire{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 6;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-11}}
+.pulse{fill:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
 
-/* cards */
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:border-color .2s,transform .2s}
-.card:hover{border-color:var(--accent2);transform:translateY(-3px)}
-.icon{font-size:1.8rem;margin-bottom:12px}
-.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:.95rem}
-.card li{margin-bottom:6px}
+/* ticker */
+.ticker{border-block:1.5px solid var(--ink);background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap}
+.ticker div{display:inline-block;padding:14px 0;animation:tick 38s linear infinite}
+.ticker span{margin:0 22px}
+.ticker b{color:var(--accent);font-weight:400}
+@keyframes tick{to{transform:translateX(-50%)}}
 
-/* steps */
-.steps{counter-reset:s;display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.step{counter-increment:s;padding:24px;border-left:2px solid var(--accent)}
-.step::before{content:"0" counter(s);font-weight:800;font-size:2rem;color:var(--accent);display:block;margin-bottom:6px}
+section{padding:104px 0}
+.sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:56px;align-items:end}
+@media(max-width:820px){.sec-head{grid-template-columns:1fr;gap:16px}}
+.sec-head h2{margin-top:16px}
 
-/* split */
-.split{display:grid;gap:40px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center}
-.check{list-style:none;padding:0;margin:0}
-.check li{padding-left:30px;position:relative;margin-bottom:14px;color:var(--muted)}
-.check li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
-.check b{color:var(--text)}
+/* service explorer */
+.explorer{border:1.5px solid var(--ink);background:var(--paper)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1.5px solid var(--ink)}
+.tab{padding:20px 18px;background:transparent;border:0;border-right:1.5px solid var(--ink);cursor:pointer;text-align:left;font:inherit;color:var(--ink);transition:.15s}
+.tab:last-child{border-right:0}
+.tab .mono{display:block;color:var(--ink2);margin-bottom:6px}
+.tab strong{font:400 1.35rem var(--serif);letter-spacing:-.02em}
+.tab:hover{background:var(--paper2)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tab[aria-selected="true"] .mono{color:var(--accent)}
+@media(max-width:700px){.tabs{grid-template-columns:1fr 1fr}.tab:nth-child(2){border-right:0}.tab:nth-child(-n+2){border-bottom:1.5px solid var(--ink)}}
+.panel{display:grid;grid-template-columns:1fr 1fr;min-height:340px}
+@media(max-width:820px){.panel{grid-template-columns:1fr}}
+.col{padding:34px}
+.col+.col{border-left:1.5px solid var(--ink);background:var(--paper2)}
+@media(max-width:820px){.col+.col{border-left:0;border-top:1.5px solid var(--ink)}}
+.col h3{font-size:1.15rem;margin:8px 0 18px;font-family:var(--sans);font-weight:600;letter-spacing:0}
+.flow{list-style:none;margin:0;padding:0}
+.flow li{position:relative;padding:0 0 18px 34px;color:var(--ink2);font-size:.98rem}
+.flow li::before{content:"";position:absolute;left:5px;top:7px;width:9px;height:9px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper)}
+.flow li::after{content:"";position:absolute;left:9px;top:19px;bottom:-2px;width:1px;background:var(--ink)}
+.flow li:last-child::after{display:none}
+.after .flow li::before{background:var(--accent);border-color:var(--accent)}
+.after .flow li{color:var(--ink)}
+.outcome{margin-top:6px;padding-top:16px;border-top:1px solid var(--rule);font-family:var(--serif);font-size:1.25rem;color:var(--ink)}
+.outcome em{font-style:italic}
 
-/* cta + form */
-.contact{background:linear-gradient(135deg,#0f2a3f,#0f3a2c)}
-form{display:grid;gap:14px}
-label{font-size:.85rem;color:var(--muted)}
-input,select,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;margin-top:4px}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--accent2)}
-footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+/* method */
+.method{background:var(--deep);color:var(--paper);border-block:1.5px solid var(--ink)}
+.method p{color:#cfd8cf}
+.method .tag{color:#cfd8cf}.method .tag::before{background:var(--paper)}
+.method em{color:#ff8a5c}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #f1ece155}
+@media(max-width:900px){.stages{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.stages{grid-template-columns:1fr}}
+.stage{padding:32px 26px 36px 0;border-right:1px solid #f1ece133;padding-left:26px}
+.stage:first-child{padding-left:0}
+.stage:last-child{border-right:0}
+@media(max-width:900px){.stage{padding-left:0;border-right:0;border-bottom:1px solid #f1ece133}}
+.stage .n{font-family:var(--serif);font-size:3.4rem;color:#ff8a5c;line-height:1;display:block;margin-bottom:18px}
+.stage h3{margin-bottom:10px}
+.stage .wk{display:block;margin-top:14px;color:#9fb5a9}
+
+/* principles */
+.principles{border-top:1.5px solid var(--ink)}
+.pr{display:grid;grid-template-columns:90px 1fr 1.1fr;gap:28px;padding:34px 0;border-bottom:1px solid var(--ink);align-items:baseline}
+@media(max-width:820px){.pr{grid-template-columns:1fr;gap:8px}}
+.pr h3{font-size:clamp(1.6rem,3vw,2.2rem)}
+.pr p{margin:0}
+
+/* engagements */
+.eng{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid var(--ink);background:var(--paper)}
+@media(max-width:900px){.eng{grid-template-columns:1fr}}
+.plan{padding:34px;display:flex;flex-direction:column}
+.plan+.plan{border-left:1.5px solid var(--ink)}
+@media(max-width:900px){.plan+.plan{border-left:0;border-top:1.5px solid var(--ink)}}
+.plan.hot{background:var(--ink);color:var(--paper)}
+.plan.hot p,.plan.hot li{color:#cfd0d3}
+.plan.hot .mono{color:var(--accent)}
+.plan h3{margin:10px 0 12px;font-size:1.9rem}
+.plan ul{margin:8px 0 26px;padding:0;list-style:none;flex:1}
+.plan li{padding:9px 0;border-top:1px solid var(--rule);font-size:.96rem;color:var(--ink2)}
+.plan.hot li{border-color:#f1ece133}
+.plan a{align-self:flex-start}
+.plan.hot .btn{background:var(--accent);border-color:var(--accent)}
+.plan.hot .btn:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+
+/* contact */
+.contact{background:var(--paper2);border-top:1.5px solid var(--ink)}
+.cgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr;gap:40px}}
+.next{list-style:none;padding:0;margin:34px 0 0;counter-reset:n}
+.next li{counter-increment:n;display:flex;gap:16px;padding:14px 0;border-top:1px solid var(--rule);color:var(--ink2)}
+.next li::before{content:"0" counter(n);font-family:var(--mono);font-size:.8rem;color:var(--accent);padding-top:3px}
+form{display:grid;gap:18px;background:var(--paper);border:1.5px solid var(--ink);padding:34px;box-shadow:10px 10px 0 var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+label{display:block}
+label .mono{color:var(--ink2);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 0;border:0;border-bottom:1.5px solid var(--ink);background:transparent;color:var(--ink);font:inherit;border-radius:0}
+input:focus,select:focus,textarea:focus{outline:0;border-bottom-color:var(--accent);background:#d9481c0d}
+textarea{resize:vertical}
+
+footer{background:var(--ink);color:var(--paper);padding:56px 0 34px}
+footer .big{font-family:var(--serif);font-size:clamp(2rem,5vw,3.6rem);letter-spacing:-.03em;line-height:1.05;max-width:760px}
+footer .big em{color:#ff8a5c}
+.fbar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;padding-top:22px;border-top:1px solid #f1ece144;color:#a9abb0}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="#top">Brooks<span>Process</span>Solutions</a>
+    <a class="logo" href="#top"><i>B</i>Brooks Process Solutions</a>
     <nav>
-      <a href="#services">Services</a>
-      <a href="#approach">Approach</a>
-      <a href="#why">Why Us</a>
-      <a class="btn btn-primary" href="#contact">Book a Call</a>
+      <a href="#services">What we automate</a>
+      <a href="#method">Method</a>
+      <a href="#work-with-us">Work with us</a>
+      <a class="btn" href="#contact">Start a conversation</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow">AI Implementation Consulting</span>
-    <h1>Put AI to work in your business, <span class="grad">not on a slide deck.</span></h1>
-    <p class="lead">Brooks Process Solutions designs and implements practical AI systems across operations, marketing, sales and lead generation, so your team saves hours, wins more customers and scales without the chaos.</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#contact">Get a Free AI Roadmap</a>
-      <a class="btn btn-ghost" href="#services">See What We Do</a>
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="mono tag">AI implementation consultancy</span>
+      <h1>We find the work your team <em>shouldn’t</em> be doing, and hand it to AI.</h1>
+      <p class="lead">Brooks Process Solutions maps how your business really runs, then builds AI into operations, marketing, sales and lead generation. The result: systems that work while your people do the work only people can.</p>
+      <div class="cta">
+        <a class="btn" href="#contact">Get a free process review &rarr;</a>
+        <a class="btn out" href="#services">See it in practice</a>
+      </div>
     </div>
-    <div class="chips">
-      <span class="chip">Operations</span><span class="chip">Marketing</span><span class="chip">Sales</span><span class="chip">Lead Generation</span>
-    </div>
+
+    <figure class="diagram" style="margin:0" aria-label="Diagram: business inputs flow through an AI layer into outcomes">
+      <div class="cap mono"><span>Fig. 01</span><span>Process, reimagined</span></div>
+      <svg viewBox="0 0 400 330" role="img" aria-hidden="true">
+        <g class="node"><rect x="10" y="20" width="110" height="38"/><text x="22" y="43">NEW LEAD</text></g>
+        <g class="node"><rect x="10" y="100" width="110" height="38"/><text x="22" y="123">INVOICE</text></g>
+        <g class="node"><rect x="10" y="180" width="110" height="38"/><text x="22" y="203">CUSTOMER Q</text></g>
+        <g class="node"><rect x="10" y="260" width="110" height="38"/><text x="22" y="283">CAMPAIGN</text></g>
+
+        <path class="wire" d="M120 39 C170 39 150 150 190 150"/>
+        <path class="wire" d="M120 119 C165 119 160 150 190 150"/>
+        <path class="wire" d="M120 199 C165 199 160 180 190 180"/>
+        <path class="wire" d="M120 279 C170 279 150 180 190 180"/>
+
+        <g class="node ai"><rect x="190" y="120" width="86" height="90"/><text x="206" y="161">AI</text><text x="206" y="179">LAYER</text></g>
+        <circle class="pulse" cx="266" cy="132" r="4"/>
+
+        <path class="wire" d="M276 140 C310 140 300 60 320 60"/>
+        <path class="wire" d="M276 165 L320 165"/>
+        <path class="wire" d="M276 190 C310 190 300 270 320 270"/>
+
+        <g class="node out"><rect x="320" y="42" width="72" height="36"/><text x="329" y="64">BOOKED</text></g>
+        <g class="node out"><rect x="320" y="147" width="72" height="36"/><text x="329" y="169">SENT</text></g>
+        <g class="node out"><rect x="320" y="252" width="72" height="36"/><text x="329" y="274">LIVE</text></g>
+      </svg>
+    </figure>
   </div>
-</section>
+</div>
+
+<div class="ticker mono" aria-hidden="true">
+  <div>
+    <span>Lead capture</span><b>/</b><span>Qualification</span><b>/</b><span>Follow-up</span><b>/</b><span>Proposals</span><b>/</b><span>Invoicing</span><b>/</b><span>Reporting</span><b>/</b><span>Content</span><b>/</b><span>Customer support</span><b>/</b><span>CRM hygiene</span><b>/</b><span>Scheduling</span><b>/</b>
+    <span>Lead capture</span><b>/</b><span>Qualification</span><b>/</b><span>Follow-up</span><b>/</b><span>Proposals</span><b>/</b><span>Invoicing</span><b>/</b><span>Reporting</span><b>/</b><span>Content</span><b>/</b><span>Customer support</span><b>/</b><span>CRM hygiene</span><b>/</b><span>Scheduling</span><b>/</b>
+  </div>
+</div>
 
 <section id="services">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Services</span>
-      <h2>Four places AI pays for itself fastest</h2>
-      <p>We find the highest-ROI workflows in each area, build the solution, and train your team to run it.</p>
+    <div class="sec-head">
+      <div><span class="mono tag">What we automate</span><h2>Four functions. <em>One</em> connected system.</h2></div>
+      <p>Most AI projects fail because they automate a single task in isolation. We connect operations, marketing, sales and lead generation so each one feeds the next. Pick a function to see a before and after.</p>
     </div>
-    <div class="grid">
-      <article class="card">
-        <div class="icon">⚙️</div>
-        <h3>Operations</h3>
-        <ul>
-          <li>Process mapping &amp; automation</li>
-          <li>AI assistants for internal knowledge</li>
-          <li>Document, invoice &amp; email processing</li>
-          <li>Reporting and dashboards on autopilot</li>
-        </ul>
-      </article>
-      <article class="card">
-        <div class="icon">📣</div>
-        <h3>Marketing</h3>
-        <ul>
-          <li>AI content engines in your brand voice</li>
-          <li>SEO and campaign workflows</li>
-          <li>Social, email &amp; ad creative at scale</li>
-          <li>Performance analysis and insights</li>
-        </ul>
-      </article>
-      <article class="card">
-        <div class="icon">🤝</div>
-        <h3>Sales</h3>
-        <ul>
-          <li>CRM automation &amp; data enrichment</li>
-          <li>Personalized outreach and follow-up</li>
-          <li>Proposal and quote generation</li>
-          <li>Call summaries and next-step tracking</li>
-        </ul>
-      </article>
-      <article class="card">
-        <div class="icon">🎯</div>
-        <h3>Lead Generation</h3>
-        <ul>
-          <li>Prospect research &amp; list building</li>
-          <li>Automated lead capture and qualification</li>
-          <li>AI chat and instant-response systems</li>
-          <li>Nurture sequences that never go cold</li>
-        </ul>
-      </article>
+
+    <div class="explorer">
+      <div class="tabs" role="tablist" aria-label="Business functions">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="panel" id="t0" data-i="0"><span class="mono">01</span><strong>Operations</strong></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel" id="t1" data-i="1"><span class="mono">02</span><strong>Marketing</strong></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel" id="t2" data-i="2"><span class="mono">03</span><strong>Sales</strong></button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel" id="t3" data-i="3"><span class="mono">04</span><strong>Lead generation</strong></button>
+      </div>
+      <div class="panel" id="panel" role="tabpanel" aria-live="polite">
+        <div class="col before"><span class="mono">Today</span><h3 id="bt"></h3><ol class="flow" id="bl"></ol></div>
+        <div class="col after"><span class="mono">With AI</span><h3 id="at"></h3><ol class="flow" id="al"></ol><div class="outcome" id="oc"></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="approach" class="alt">
+<section id="method" class="method">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Approach</span>
-      <h2>From idea to running system in four steps</h2>
-      <p>No jargon, no endless pilots. Every step is tied to a measurable business outcome.</p>
+    <div class="sec-head">
+      <div><span class="mono tag">Method</span><h2>Process first. <em>Then</em> the technology.</h2></div>
+      <p>Technology is the easy part. We spend our time making sure it fits how your people actually work, so it gets used and keeps paying off.</p>
     </div>
-    <div class="steps">
-      <div class="step"><h3>Discover</h3><p>We audit your workflows and find where time and revenue leak.</p></div>
-      <div class="step"><h3>Design</h3><p>A prioritized AI roadmap, with the right tools for your stack and budget.</p></div>
-      <div class="step"><h3>Deploy</h3><p>We build, integrate and test the solutions inside your existing systems.</p></div>
-      <div class="step"><h3>Develop</h3><p>Team training, monitoring and iteration so the results keep compounding.</p></div>
+    <div class="stages">
+      <div class="stage"><span class="n">1</span><h3>Map</h3><p>We sit with your team and chart the real workflows, including the workarounds nobody wrote down.</p><span class="mono wk">Output: process map</span></div>
+      <div class="stage"><span class="n">2</span><h3>Prioritize</h3><p>Every opportunity is scored on hours saved, revenue impact and effort. You see the shortlist and the reasoning.</p><span class="mono wk">Output: ranked roadmap</span></div>
+      <div class="stage"><span class="n">3</span><h3>Build</h3><p>We implement inside the tools you already use, test with real data, and keep a human in the loop where it matters.</p><span class="mono wk">Output: working systems</span></div>
+      <div class="stage"><span class="n">4</span><h3>Embed</h3><p>Training, documentation and monitoring, so the system improves and your team owns it.</p><span class="mono wk">Output: a team that runs it</span></div>
     </div>
   </div>
 </section>
 
-<section id="why">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Why Brooks Process Solutions</span>
-      <h2>Process first. AI second.</h2>
-      <p>AI only works when it fits how your business actually runs. We start with the process, then apply the technology, so you get dependable systems instead of shiny experiments.</p>
-      <a class="btn btn-primary" href="#contact">Talk to Us</a>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="mono tag">How we work</span><h2>A few things we <em>won’t</em> compromise on.</h2></div>
     </div>
-    <ul class="check">
-      <li><b>Business-outcome focused.</b> Every project targets time saved, leads generated or revenue won.</li>
-      <li><b>Tool-agnostic.</b> We recommend what fits, not what we resell.</li>
-      <li><b>Built for your team.</b> Plain-English training and documentation, no black boxes.</li>
-      <li><b>Responsible by design.</b> Data privacy and human oversight are built in from day one.</li>
-    </ul>
+    <div class="principles">
+      <div class="pr"><span class="mono">A</span><h3>Outcomes over novelty</h3><p>If it doesn’t save time, win customers or cut cost, we don’t build it. Every project starts with a number to move.</p></div>
+      <div class="pr"><span class="mono">B</span><h3>Tools that fit, not tools we sell</h3><p>We’re vendor-neutral. We recommend what suits your stack, your budget and your team’s skills.</p></div>
+      <div class="pr"><span class="mono">C</span><h3>Humans stay in charge</h3><p>AI drafts, sorts and routes. People approve what matters. Privacy, accuracy and oversight are designed in, not bolted on.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="work-with-us" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="mono tag">Work with us</span><h2>Start small. <em>Scale</em> what works.</h2></div>
+      <p>Three ways to engage, depending on how far along you are. Scope and pricing are tailored to your business.</p>
+    </div>
+    <div class="eng">
+      <div class="plan"><span class="mono">Start here</span><h3>AI Process Audit</h3><p>A focused review of where AI will pay off fastest in your business.</p>
+        <ul><li>Workflow interviews &amp; mapping</li><li>Opportunity scoring</li><li>Written roadmap &amp; quick wins</li></ul>
+        <a class="btn out" href="#contact">Ask about audits</a></div>
+      <div class="plan hot"><span class="mono">Most requested</span><h3>Implementation Sprint</h3><p>We build and launch your highest-impact automations end to end.</p>
+        <ul><li>System design &amp; integration</li><li>Testing with your real data</li><li>Team training &amp; handover</li></ul>
+        <a class="btn" href="#contact">Plan a sprint</a></div>
+      <div class="plan"><span class="mono">Ongoing</span><h3>AI Partner</h3><p>A retained partner who keeps improving your systems as the technology moves.</p>
+        <ul><li>Monitoring &amp; optimization</li><li>New workflows each quarter</li><li>Priority support</li></ul>
+        <a class="btn out" href="#contact">Discuss a retainer</a></div>
+    </div>
   </div>
 </section>
 
 <section id="contact" class="contact">
-  <div class="wrap split">
+  <div class="wrap cgrid">
     <div>
-      <span class="eyebrow">Get Started</span>
-      <h2>Let’s find your first win with AI</h2>
-      <p>Tell us a little about your business. We’ll follow up with a free, no-obligation AI roadmap call.</p>
+      <span class="mono tag">Start a conversation</span>
+      <h2 style="margin-top:16px">Tell us where the time <em>goes</em>.</h2>
+      <p style="margin-top:20px">A short note is enough. We’ll come back with a free process review and an honest view of whether AI is the right fix.</p>
+      <ol class="next">
+        <li>You send a few lines about your business and bottlenecks.</li>
+        <li>We reply within two business days to book a short call.</li>
+        <li>You get a clear, jargon-free view of the first wins.</li>
+      </ol>
     </div>
-    <form id="lead" onsubmit="return send(event)">
-      <label>Name<input name="name" required autocomplete="name"></label>
-      <label>Email<input name="email" type="email" required autocomplete="email"></label>
-      <label>Company<input name="company" autocomplete="organization"></label>
-      <label>Biggest opportunity
-        <select name="area">
-          <option>Operations</option><option>Marketing</option><option>Sales</option><option>Lead Generation</option><option>Not sure yet</option>
-        </select>
-      </label>
-      <label>What would you like to improve?<textarea name="msg" rows="3"></textarea></label>
-      <button class="btn btn-primary" type="submit">Request My Roadmap</button>
+    <form onsubmit="return send(event)">
+      <div class="two">
+        <label><span class="mono">Name</span><input name="name" required autocomplete="name"></label>
+        <label><span class="mono">Email</span><input name="email" type="email" required autocomplete="email"></label>
+      </div>
+      <div class="two">
+        <label><span class="mono">Company</span><input name="company" autocomplete="organization"></label>
+        <label><span class="mono">Biggest opportunity</span>
+          <select name="area"><option>Operations</option><option>Marketing</option><option>Sales</option><option>Lead generation</option><option>Not sure yet</option></select></label>
+      </div>
+      <label><span class="mono">What takes too much time?</span><textarea name="msg" rows="4"></textarea></label>
+      <button class="btn" type="submit">Send &rarr;</button>
     </form>
   </div>
 </section>
@@ -224,19 +341,49 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> Brooks Process Solutions. All rights reserved.</span>
-    <span>AI implementation for operations, marketing, sales &amp; lead generation.</span>
+    <div class="big">Less busywork. More <em>business.</em></div>
+    <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions</span><span>AI for operations · marketing · sales · lead generation</span></div>
   </div>
 </footer>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-// Opens the visitor's email app with the form pre-filled. Swap for Formspree/Netlify Forms later.
+var D=[
+ {bt:"Work trapped in inboxes and spreadsheets",b:["Invoices and forms keyed in by hand","Status updates chased over email","Reports built manually each week","Knowledge lives in people’s heads"],
+  at:"Work that routes itself",a:["AI reads, extracts and files documents","Tasks trigger and track automatically","Dashboards refresh themselves","An internal assistant answers “how do we…?”"],o:"Hours back every week, with fewer errors."},
+ {bt:"Content that depends on who has time",b:["Ideas stall waiting on a writer","Each channel is rewritten from scratch","Campaign results reviewed monthly, if at all","Brand voice drifts across the team"],
+  at:"A content engine in your voice",a:["AI drafts from briefs and your brand guide","One idea becomes posts, emails and ads","Performance is analysed continuously","Your team edits and approves, not starts from blank"],o:"More output, consistent quality, faster learning."},
+ {bt:"Selling slowed by admin",b:["CRM updated days late, or never","Follow-ups depend on memory","Proposals rebuilt from old documents","Call notes lost after the meeting"],
+  at:"Reps spend time selling",a:["Calls are summarised and logged automatically","Timely, personalised follow-ups are drafted","Proposals assemble from your approved content","Stalled deals get flagged before they go cold"],o:"Faster cycles and a CRM you can trust."},
+ {bt:"Leads that arrive and leak",b:["Prospect research done by hand","Enquiries answered hours later","No consistent way to qualify","Cold leads never nurtured"],
+  at:"A pipeline that never sleeps",a:["AI researches and builds targeted prospect lists","Instant, helpful replies to every enquiry","Leads scored and routed to the right person","Automated nurture keeps warm leads warm"],o:"More qualified conversations, less chasing."}
+];
+var tabs=[].slice.call(document.querySelectorAll('.tab'));
+function show(i){
+  var d=D[i];
+  tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i)});
+  document.getElementById('panel').setAttribute('aria-labelledby','t'+i);
+  document.getElementById('bt').textContent=d.bt;
+  document.getElementById('at').textContent=d.at;
+  document.getElementById('oc').textContent=d.o;
+  document.getElementById('bl').innerHTML=d.b.map(function(x){return '<li>'+x+'</li>'}).join('');
+  document.getElementById('al').innerHTML=d.a.map(function(x){return '<li>'+x+'</li>'}).join('');
+}
+tabs.forEach(function(t){
+  t.addEventListener('click',function(){show(+t.dataset.i)});
+  t.addEventListener('keydown',function(e){
+    var i=+t.dataset.i,n=e.key==='ArrowRight'?(i+1)%4:e.key==='ArrowLeft'?(i+3)%4:null;
+    if(n!==null){show(n);tabs[n].focus();e.preventDefault()}
+  });
+});
+show(0);
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+// Opens the visitor's email app with the form pre-filled. Swap for Formspree/Netlify Forms when ready.
 function send(e){
   e.preventDefault();
-  var f = e.target, v = function(n){return f.elements[n].value};
-  var body = 'Name: '+v('name')+'\nEmail: '+v('email')+'\nCompany: '+v('company')+'\nArea: '+v('area')+'\n\n'+v('msg');
-  location.href = 'mailto:devinbrooks.96@gmail.com?subject='+encodeURIComponent('AI Roadmap Request - '+v('name'))+'&body='+encodeURIComponent(body);
+  var f=e.target,v=function(n){return f.elements[n].value};
+  var body='Name: '+v('name')+'\nEmail: '+v('email')+'\nCompany: '+v('company')+'\nArea: '+v('area')+'\n\n'+v('msg');
+  location.href='mailto:devinbrooks.96@gmail.com?subject='+encodeURIComponent('Process review request - '+v('name'))+'&body='+encodeURIComponent(body);
   return false;
 }
 </script>
