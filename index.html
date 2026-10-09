@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brooks Process Solutions | AI Consulting for Operations, Marketing &amp; Sales</title>
+<meta name="description" content="Brooks Process Solutions helps businesses implement AI across operations, marketing, sales and lead generation, so you save time, win more customers and scale without adding headcount.">
+<meta name="theme-color" content="#0b1220">
+<meta property="og:title" content="Brooks Process Solutions | AI Implementation Consulting">
+<meta property="og:description" content="Practical AI implementation across operations, marketing, sales and lead generation.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#0b1220; --bg2:#101a2e; --card:#14203a; --line:#22314f;
+  --text:#e8edf7; --muted:#9fb0cc; --accent:#4ade80; --accent2:#38bdf8;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.15;margin:0 0 .5em;letter-spacing:-.02em}
+h1{font-size:clamp(2.2rem,5.5vw,4rem)}
+h2{font-size:clamp(1.7rem,3.5vw,2.5rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em;color:var(--muted)}
+.grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-block;font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:700;margin-bottom:12px}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:rgba(11,18,32,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:800;text-decoration:none;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:22px;align-items:center}
+nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
+nav a:hover{color:var(--text)}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#04101f}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}
+nav .btn{padding:9px 18px;color:#04101f;font-size:.9rem}
+@media(max-width:760px){nav a:not(.btn){display:none}}
+
+/* hero */
+.hero{padding:96px 0 72px;background:radial-gradient(800px 400px at 80% -10%,rgba(56,189,248,.18),transparent),radial-gradient(700px 400px at 0% 0%,rgba(74,222,128,.12),transparent)}
+.hero p.lead{font-size:1.2rem;max-width:640px}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
+.chip{border:1px solid var(--line);background:var(--bg2);padding:6px 14px;border-radius:999px;font-size:.85rem;color:var(--muted)}
+
+section{padding:80px 0}
+.alt{background:var(--bg2);border-block:1px solid var(--line)}
+.head{max-width:680px;margin-bottom:44px}
+
+/* cards */
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--accent2);transform:translateY(-3px)}
+.icon{font-size:1.8rem;margin-bottom:12px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:.95rem}
+.card li{margin-bottom:6px}
+
+/* steps */
+.steps{counter-reset:s;display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{counter-increment:s;padding:24px;border-left:2px solid var(--accent)}
+.step::before{content:"0" counter(s);font-weight:800;font-size:2rem;color:var(--accent);display:block;margin-bottom:6px}
+
+/* split */
+.split{display:grid;gap:40px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center}
+.check{list-style:none;padding:0;margin:0}
+.check li{padding-left:30px;position:relative;margin-bottom:14px;color:var(--muted)}
+.check li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
+.check b{color:var(--text)}
+
+/* cta + form */
+.contact{background:linear-gradient(135deg,#0f2a3f,#0f3a2c)}
+form{display:grid;gap:14px}
+label{font-size:.85rem;color:var(--muted)}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;margin-top:4px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent2)}
+footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Brooks<span>Process</span>Solutions</a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#why">Why Us</a>
+      <a class="btn btn-primary" href="#contact">Book a Call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">AI Implementation Consulting</span>
+    <h1>Put AI to work in your business, <span class="grad">not on a slide deck.</span></h1>
+    <p class="lead">Brooks Process Solutions designs and implements practical AI systems across operations, marketing, sales and lead generation, so your team saves hours, wins more customers and scales without the chaos.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#contact">Get a Free AI Roadmap</a>
+      <a class="btn btn-ghost" href="#services">See What We Do</a>
+    </div>
+    <div class="chips">
+      <span class="chip">Operations</span><span class="chip">Marketing</span><span class="chip">Sales</span><span class="chip">Lead Generation</span>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Services</span>
+      <h2>Four places AI pays for itself fastest</h2>
+      <p>We find the highest-ROI workflows in each area, build the solution, and train your team to run it.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">⚙️</div>
+        <h3>Operations</h3>
+        <ul>
+          <li>Process mapping &amp; automation</li>
+          <li>AI assistants for internal knowledge</li>
+          <li>Document, invoice &amp; email processing</li>
+          <li>Reporting and dashboards on autopilot</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="icon">📣</div>
+        <h3>Marketing</h3>
+        <ul>
+          <li>AI content engines in your brand voice</li>
+          <li>SEO and campaign workflows</li>
+          <li>Social, email &amp; ad creative at scale</li>
+          <li>Performance analysis and insights</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="icon">🤝</div>
+        <h3>Sales</h3>
+        <ul>
+          <li>CRM automation &amp; data enrichment</li>
+          <li>Personalized outreach and follow-up</li>
+          <li>Proposal and quote generation</li>
+          <li>Call summaries and next-step tracking</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="icon">🎯</div>
+        <h3>Lead Generation</h3>
+        <ul>
+          <li>Prospect research &amp; list building</li>
+          <li>Automated lead capture and qualification</li>
+          <li>AI chat and instant-response systems</li>
+          <li>Nurture sequences that never go cold</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="approach" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Approach</span>
+      <h2>From idea to running system in four steps</h2>
+      <p>No jargon, no endless pilots. Every step is tied to a measurable business outcome.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Discover</h3><p>We audit your workflows and find where time and revenue leak.</p></div>
+      <div class="step"><h3>Design</h3><p>A prioritized AI roadmap, with the right tools for your stack and budget.</p></div>
+      <div class="step"><h3>Deploy</h3><p>We build, integrate and test the solutions inside your existing systems.</p></div>
+      <div class="step"><h3>Develop</h3><p>Team training, monitoring and iteration so the results keep compounding.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Why Brooks Process Solutions</span>
+      <h2>Process first. AI second.</h2>
+      <p>AI only works when it fits how your business actually runs. We start with the process, then apply the technology, so you get dependable systems instead of shiny experiments.</p>
+      <a class="btn btn-primary" href="#contact">Talk to Us</a>
+    </div>
+    <ul class="check">
+      <li><b>Business-outcome focused.</b> Every project targets time saved, leads generated or revenue won.</li>
+      <li><b>Tool-agnostic.</b> We recommend what fits, not what we resell.</li>
+      <li><b>Built for your team.</b> Plain-English training and documentation, no black boxes.</li>
+      <li><b>Responsible by design.</b> Data privacy and human oversight are built in from day one.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Get Started</span>
+      <h2>Let’s find your first win with AI</h2>
+      <p>Tell us a little about your business. We’ll follow up with a free, no-obligation AI roadmap call.</p>
+    </div>
+    <form id="lead" onsubmit="return send(event)">
+      <label>Name<input name="name" required autocomplete="name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      <label>Company<input name="company" autocomplete="organization"></label>
+      <label>Biggest opportunity
+        <select name="area">
+          <option>Operations</option><option>Marketing</option><option>Sales</option><option>Lead Generation</option><option>Not sure yet</option>
+        </select>
+      </label>
+      <label>What would you like to improve?<textarea name="msg" rows="3"></textarea></label>
+      <button class="btn btn-primary" type="submit">Request My Roadmap</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Brooks Process Solutions. All rights reserved.</span>
+    <span>AI implementation for operations, marketing, sales &amp; lead generation.</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+// Opens the visitor's email app with the form pre-filled. Swap for Formspree/Netlify Forms later.
+function send(e){
+  e.preventDefault();
+  var f = e.target, v = function(n){return f.elements[n].value};
+  var body = 'Name: '+v('name')+'\nEmail: '+v('email')+'\nCompany: '+v('company')+'\nArea: '+v('area')+'\n\n'+v('msg');
+  location.href = 'mailto:devinbrooks.96@gmail.com?subject='+encodeURIComponent('AI Roadmap Request - '+v('name'))+'&body='+encodeURIComponent(body);
+  return false;
+}
+</script>
+</body>
+</html>
