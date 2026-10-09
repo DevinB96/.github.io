@@ -348,6 +348,64 @@ legend{padding:0;margin-bottom:10px}
 .flash{animation:flash 1.2s}
 @keyframes flash{0%{box-shadow:10px 10px 0 var(--accent)}100%{box-shadow:10px 10px 0 var(--ink)}}
 
+/* form states */
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.form-note a{color:var(--ink);text-decoration-color:var(--accent);text-underline-offset:3px}
+.form-note.err{color:#a8300b;font-weight:500}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
+form.done>*:not(.sent){display:none}
+form.done .sent{display:block;border-top:0;padding-top:0}
+.sent:focus{outline:0}
+
+/* booking */
+.booker{display:grid;grid-template-columns:300px 1fr;border:1.5px solid var(--ink);background:var(--paper);box-shadow:10px 10px 0 var(--ink)}
+@media(max-width:900px){.booker{grid-template-columns:1fr}}
+.book-info{padding:32px;border-right:1.5px solid var(--ink);background:var(--paper2)}
+@media(max-width:900px){.book-info{border-right:0;border-bottom:1.5px solid var(--ink)}}
+.book-info h3{font-size:1.7rem;margin:10px 0 20px}
+.book-info dl{margin:0;border-top:1px solid var(--rule)}
+.book-info dl div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.book-info dt{color:var(--ink2)}
+.book-info dd{margin:0;font-weight:500;text-align:right}
+.agenda{list-style:none;margin:0;padding:0}
+.agenda li{padding:6px 0 6px 22px;position:relative;color:var(--ink2);font-size:.95rem}
+.agenda li::before{content:"→";position:absolute;left:0;color:var(--accent)}
+.book-stage{min-height:460px}
+.book-step[data-step=pick]{display:grid;grid-template-columns:1.25fr 1fr}
+.book-step[data-step=pick][hidden]{display:none}
+@media(max-width:700px){.book-step[data-step=pick]{grid-template-columns:1fr}}
+.cal{padding:28px;border-right:1px solid var(--rule)}
+@media(max-width:700px){.cal{border-right:0;border-bottom:1px solid var(--rule);padding:22px}}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cal-head strong{font:400 1.45rem var(--serif);letter-spacing:-.02em}
+.cal-nav{width:36px;height:36px;border:1.5px solid var(--ink);background:transparent;cursor:pointer;font:inherit;color:var(--ink)}
+.cal-nav:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+.cal-nav:disabled{opacity:.25;cursor:default}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-dow{color:var(--ink2);margin-bottom:6px}
+.day{aspect-ratio:1;border:1.5px solid transparent;background:transparent;font:500 .95rem var(--sans);color:var(--ink);cursor:pointer;position:relative}
+.day:not(:disabled){border-color:var(--rule);background:#fbf8f2}
+.day:not(:disabled):hover{border-color:var(--ink)}
+.day:disabled{color:#15181d40;cursor:default}
+.day.today::after{content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
+.day[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.slots{padding:28px;display:flex;flex-direction:column}
+@media(max-width:700px){.slots{padding:22px}}
+.slots h4{font:400 1.3rem var(--serif);letter-spacing:-.02em;margin:6px 0 16px}
+.slot-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.slot{padding:12px;border:1.5px solid var(--ink);background:transparent;font:500 .95rem var(--sans);color:var(--ink);cursor:pointer;transition:background .15s,color .15s}
+.slot:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.slot:disabled{opacity:.3;cursor:default;text-decoration:line-through}
+.slots .form-note{margin-top:auto}
+.book-step[data-step=details],.book-step.done{padding:28px 32px}
+.when{margin:18px 0 22px;padding:16px 18px;border-left:3px solid var(--accent);background:var(--paper2)}
+.when .mono{display:block;color:var(--ink2);margin-bottom:4px}
+.when strong{font:400 1.25rem var(--serif);outline:0}
+form.bare{padding:0;border:0;box-shadow:none;background:transparent}
+.book-step.done h3{font-size:clamp(2rem,4vw,2.8rem);margin:10px 0 14px;outline:0}
+.book-step.done p{max-width:520px}
+.book-frame{width:100%;height:700px;border:0;display:block}
+
 /* footer */
 footer{background:var(--ink);color:var(--paper);padding:80px 0 34px}
 footer .big{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.6rem);letter-spacing:-.03em;line-height:1.02;max-width:900px}

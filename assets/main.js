@@ -1,7 +1,17 @@
 /* Brooks Process Solutions: site interactions */
 (function () {
   'use strict';
+  /* ---------- site configuration ----------
+     CONTACT_EMAIL  where enquiries go (also the mailto fallback).
+     FORM_ENDPOINT  FormSubmit AJAX endpoint. The first submission sends an activation
+                    email to CONTACT_EMAIL; after activating, you can swap the address in
+                    this URL for the random alias FormSubmit gives you to keep it private.
+     BOOKING_URL    optional. Paste a Calendly or Cal.com scheduling link (for example
+                    'https://calendly.com/your-name/30min') to embed it instead of the
+                    built-in request-a-time calendar. */
   var CONTACT_EMAIL = 'devinbrooks.96@gmail.com';
+  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
+  var BOOKING_URL = '';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -300,26 +310,205 @@
   }
   renderQ();
 
+  /* ---------- form delivery (shared by contact form and booking) ---------- */
+  function deliver(subject, fields, replyTo) {
+    var payload = { _subject: subject, _template: 'table', _captcha: 'false' };
+    if (replyTo) payload._replyto = replyTo;
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) {
+        if (!r.ok || String(d.success) !== 'true') throw new Error(d.message || 'Send failed');
+        return d;
+      });
+    });
+  }
+  function mailtoHref(subject, fields) {
+    var text = Object.keys(fields).map(function (k) { return k + ': ' + fields[k]; }).join('\n');
+    return 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+  }
+  function validate(f, errEl) {
+    var problems = [];
+    if (!f.name.value.trim()) problems.push('your name');
+    if (!f.email.value.trim() || !f.email.checkValidity()) problems.push('a valid email');
+    if (problems.length) {
+      errEl.textContent = 'Please add ' + problems.join(' and ') + '.';
+      errEl.hidden = false;
+      (f.name.value.trim() ? f.email : f.name).focus();
+      return false;
+    }
+    errEl.hidden = true;
+    return true;
+  }
+  function showFailure(errEl, subject, fields) {
+    errEl.innerHTML = 'Sorry, that didn’t send. Please try again, or <a href="#">email us directly</a>.';
+    errEl.querySelector('a').href = mailtoHref(subject, fields);
+    errEl.hidden = false;
+  }
+  function busy(btn, on, label) {
+    btn.disabled = on;
+    if (on) { btn.dataset.label = btn.innerHTML; btn.textContent = label; } else if (btn.dataset.label) btn.innerHTML = btn.dataset.label;
+  }
+
   /* ---------- contact form ---------- */
   var form = $('#form'), err = $('#formErr');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = form.elements;
-    var problems = [];
-    if (!f.name.value.trim()) problems.push('your name');
-    if (!f.email.value.trim() || !f.email.checkValidity()) problems.push('a valid email');
-    if (problems.length) {
-      err.textContent = 'Please add ' + problems.join(' and ') + '.';
-      err.hidden = false;
-      (f.name.value.trim() ? f.email : f.name).focus();
-      return;
-    }
-    err.hidden = true;
+    if (f._honey.value) return; // bot trap
+    if (!validate(f, err)) return;
     var areas = $$('input[name=area]:checked').map(function (c) { return c.value; }).join(', ') || 'Not specified';
-    var text = 'Name: ' + f.name.value + '\nEmail: ' + f.email.value + '\nCompany: ' + (f.company.value || '-') +
-      '\nTeam size: ' + f.size.value + '\nFocus: ' + areas + '\n\n' + f.msg.value;
-    var subject = 'Process review request: ' + f.name.value + (f.company.value ? ' (' + f.company.value + ')' : '');
-    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
-    $('#sent').classList.add('show');
+    var fields = { Name: f.name.value.trim(), Email: f.email.value.trim(), Company: f.company.value.trim() || '-',
+      'Team size': f.size.value, Focus: areas, Message: f.msg.value.trim() || '-' };
+    var subject = 'Website enquiry: ' + fields.Name + (f.company.value.trim() ? ' (' + fields.Company + ')' : '');
+    var btn = form.querySelector('[type=submit]');
+    busy(btn, true, 'Sending…');
+    deliver(subject, fields, fields.Email).then(function () {
+      form.classList.add('done');
+      $('#sent').classList.add('show');
+      $('#sent').focus();
+    }).catch(function () {
+      showFailure(err, subject, fields);
+    }).then(function () { busy(btn, false); });
   });
+
+  /* ---------- booking calendar ---------- */
+  var booker = $('#booker');
+  var SLOTS = [9, 10, 11, 13, 14, 15, 16];
+  var LEAD_DAYS = 1, WINDOW_DAYS = 28;
+  var tz = (function () {
+    try {
+      var part = new Intl.DateTimeFormat('en-US', { timeZoneName: 'long' }).formatToParts(new Date())
+        .filter(function (p) { return p.type === 'timeZoneName'; })[0];
+      if (part) return part.value;
+    } catch (e) { /* fall through */ }
+    return (Intl.DateTimeFormat().resolvedOptions().timeZone || 'your local time').replace(/_/g, ' ');
+  })();
+  $$('[data-tz]').forEach(function (el) { el.textContent = tz; });
+
+  if (BOOKING_URL) {
+    var url = BOOKING_URL + (BOOKING_URL.indexOf('?') === -1 ? '?' : '&') +
+      (/calendly\.com/.test(BOOKING_URL) ? 'embed_type=Inline&hide_gdpr_banner=1&embed_domain=' + location.hostname : 'embed=true');
+    var frame = document.createElement('iframe');
+    frame.src = url;
+    frame.title = 'Book a call';
+    frame.loading = 'lazy';
+    frame.className = 'book-frame';
+    $('#bookStage').textContent = '';
+    $('#bookStage').appendChild(frame);
+  } else if (booker) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var first = new Date(today); first.setDate(first.getDate() + LEAD_DAYS);
+    var last = new Date(today); last.setDate(last.getDate() + WINDOW_DAYS);
+    var viewMonth = new Date(first.getFullYear(), first.getMonth(), 1);
+    var picked = null, pickedSlot = null;
+    var dayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    var monFmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
+    var timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+    var bookable = function (d) { var w = d.getDay(); return d >= first && d <= last && w !== 0 && w !== 6; };
+    var sameDay = function (a, b) { return a && b && a.toDateString() === b.toDateString(); };
+    var slotDate = function (d, h) { var x = new Date(d); x.setHours(h, 0, 0, 0); return x; };
+
+    // Default to the first bookable day so the slots column is never empty.
+    picked = new Date(first);
+    while (!bookable(picked)) picked.setDate(picked.getDate() + 1);
+
+    var grid = $('#calGrid'), slotsEl = $('#calSlots');
+    function renderCal() {
+      $('#calMonth').textContent = monFmt.format(viewMonth);
+      $('#calPrev').disabled = viewMonth <= new Date(first.getFullYear(), first.getMonth(), 1);
+      $('#calNext').disabled = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1) > last;
+      grid.textContent = '';
+      var lead = (viewMonth.getDay() + 6) % 7; // Monday-first
+      for (var i = 0; i < lead; i++) grid.appendChild(document.createElement('span'));
+      var days = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+      for (var dnum = 1; dnum <= days; dnum++) {
+        (function (d) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'day';
+          b.textContent = d.getDate();
+          b.setAttribute('aria-label', dayFmt.format(d));
+          if (sameDay(d, today)) b.classList.add('today');
+          if (!bookable(d)) b.disabled = true;
+          if (sameDay(d, picked)) { b.setAttribute('aria-pressed', 'true'); }
+          b.addEventListener('click', function () { picked = d; pickedSlot = null; renderCal(); renderSlots(); });
+          grid.appendChild(b);
+        })(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), dnum));
+      }
+    }
+    function renderSlots() {
+      $('#slotDay').textContent = dayFmt.format(picked);
+      slotsEl.textContent = '';
+      var now = new Date();
+      SLOTS.forEach(function (h) {
+        var t = slotDate(picked, h);
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'slot';
+        b.textContent = timeFmt.format(t);
+        b.disabled = t <= now;
+        b.addEventListener('click', function () { pickedSlot = t; toDetails(); });
+        slotsEl.appendChild(b);
+      });
+    }
+    $('#calPrev').addEventListener('click', function () { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCal(); });
+    $('#calNext').addEventListener('click', function () { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCal(); });
+
+    function step(name) {
+      $$('.book-step', booker).forEach(function (s) { s.hidden = s.dataset.step !== name; });
+      var target = $('.book-step[data-step="' + name + '"] [data-focus]', booker);
+      if (target) target.focus();
+    }
+    function whenText() {
+      var end = new Date(pickedSlot.getTime() + 30 * 60000);
+      return dayFmt.format(pickedSlot) + ', ' + timeFmt.format(pickedSlot) + ' – ' + timeFmt.format(end) + ' (' + tz + ')';
+    }
+    function toDetails() {
+      $$('[data-when]', booker).forEach(function (el) { el.textContent = whenText(); });
+      step('details');
+    }
+    $('#bookBack').addEventListener('click', function () { step('pick'); });
+
+    var bform = $('#bookForm'), berr = $('#bookErr');
+    bform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = bform.elements;
+      if (f._honey.value) return;
+      if (!validate(f, berr)) return;
+      var context = [blocks.short, blocks.calc, blocks.quiz].filter(Boolean).join('\n\n');
+      var fields = { 'Requested time': whenText(), 'Requested time (UTC)': pickedSlot.toISOString(),
+        Name: f.name.value.trim(), Email: f.email.value.trim(), Company: f.company.value.trim() || '-',
+        'What to cover': f.notes.value.trim() || '-' };
+      if (context) fields['From the website tools'] = context;
+      var subject = 'Call request: ' + fields.Name + ', ' + dayFmt.format(pickedSlot) + ' ' + timeFmt.format(pickedSlot);
+      var btn = bform.querySelector('[type=submit]');
+      busy(btn, true, 'Sending…');
+      deliver(subject, fields, fields.Email).then(function () {
+        $('#icsLink').href = icsHref(pickedSlot);
+        step('done');
+      }).catch(function () {
+        showFailure(berr, subject, fields);
+      }).then(function () { busy(btn, false); });
+    });
+
+    function icsHref(start) {
+      var stamp = function (d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
+      var end = new Date(start.getTime() + 30 * 60000);
+      var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Brooks Process Solutions//Booking//EN', 'BEGIN:VEVENT',
+        'UID:' + start.getTime() + '@brooksprocesssolutions', 'DTSTAMP:' + stamp(new Date()),
+        'DTSTART:' + stamp(start), 'DTEND:' + stamp(end),
+        'SUMMARY:Intro call with Brooks Process Solutions (requested)',
+        'DESCRIPTION:Tentative hold. We will confirm the time and send a video link by email.',
+        'STATUS:TENTATIVE', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    }
+
+    viewMonth = new Date(picked.getFullYear(), picked.getMonth(), 1);
+    renderCal();
+    renderSlots();
+  }
 })();

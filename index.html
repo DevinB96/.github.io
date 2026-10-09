@@ -37,7 +37,8 @@
       <a href="#calculator">Calculator</a>
       <a href="#method">Method</a>
       <a href="#faq">FAQ</a>
-      <a class="btn" href="#contact">Start a conversation</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="#book">Book a call</a>
     </nav>
   </div>
 </header>
@@ -51,8 +52,8 @@
       <h1>We find the work your team <em>shouldn’t</em> be doing, and hand it to AI.</h1>
       <p class="lead">Brooks Process Solutions maps how your business really runs, then builds AI into operations, marketing, sales and lead generation. The result: systems that work while your people do the work only people can.</p>
       <div class="cta">
-        <a class="btn" href="#readiness">Take the 2-minute readiness check &rarr;</a>
-        <a class="btn out" href="#calculator">Estimate your time back</a>
+        <a class="btn" href="#book">Book a free intro call &rarr;</a>
+        <a class="btn out" href="#readiness">Take the 2-minute readiness check</a>
       </div>
       <div class="hero-meta mono"><span>Vendor-neutral</span><span>Human-in-the-loop</span><span>Built into your tools</span></div>
     </div>
@@ -312,13 +313,76 @@
   </div>
 </section>
 
+<!-- ============ BOOKING ============ -->
+<section id="book" class="tight-top">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv"><span class="mono tag">Book a call</span><h2>Thirty minutes. <em>No pitch.</em></h2></div>
+      <p class="rv">Pick a time that suits you for a free intro call. We’ll talk through where your team’s time goes and whether AI is the right fix. You’ll get a confirmation and video link by email.</p>
+    </div>
+    <div class="booker rv" id="booker">
+      <aside class="book-info">
+        <span class="mono" style="color:var(--accent)">Intro call</span>
+        <h3>Free process conversation</h3>
+        <dl>
+          <div><dt class="mono">Length</dt><dd>30 minutes</dd></div>
+          <div><dt class="mono">Format</dt><dd>Video call</dd></div>
+          <div><dt class="mono">Time zone</dt><dd data-tz>your local time</dd></div>
+        </dl>
+        <p class="mono" style="color:var(--ink2);margin:22px 0 10px">We’ll cover</p>
+        <ul class="agenda"><li>How work flows today</li><li>Where time and leads leak</li><li>Two or three first wins</li><li>Whether an audit makes sense</li></ul>
+      </aside>
+      <div class="book-stage" id="bookStage">
+        <div class="book-step" data-step="pick">
+          <div class="cal">
+            <div class="cal-head">
+              <button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">&larr;</button>
+              <strong id="calMonth" aria-live="polite"></strong>
+              <button type="button" class="cal-nav" id="calNext" aria-label="Next month">&rarr;</button>
+            </div>
+            <div class="cal-dow mono" aria-hidden="true"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+            <div class="cal-grid" id="calGrid"></div>
+          </div>
+          <div class="slots">
+            <span class="mono" style="color:var(--ink2)">Available times</span>
+            <h4 id="slotDay"></h4>
+            <div class="slot-list" id="calSlots"></div>
+            <p class="form-note">Times shown in <span data-tz>your local time</span>.</p>
+          </div>
+        </div>
+        <div class="book-step" data-step="details" hidden>
+          <button type="button" class="link" id="bookBack">&larr; Change time</button>
+          <div class="when"><span class="mono">Requested time</span><strong data-when tabindex="-1" data-focus></strong></div>
+          <form id="bookForm" class="bare" novalidate>
+            <div class="two">
+              <label><span class="mono">Name</span><input name="name" required autocomplete="name"></label>
+              <label><span class="mono">Email</span><input name="email" type="email" required autocomplete="email"></label>
+            </div>
+            <label><span class="mono">Company</span><input name="company" autocomplete="organization"></label>
+            <label><span class="mono">Anything we should know?</span><textarea name="notes" rows="3"></textarea></label>
+            <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <p class="form-note err" id="bookErr" role="alert" hidden></p>
+            <button class="btn" type="submit">Request this time &rarr;</button>
+          </form>
+        </div>
+        <div class="book-step done" data-step="done" hidden>
+          <span class="mono" style="color:var(--accent)">Request sent</span>
+          <h3 tabindex="-1" data-focus>You’re pencilled in.</h3>
+          <p>We’ve received your request for <strong data-when></strong>. We’ll confirm by email within one business day, with a video link.</p>
+          <a class="btn out" id="icsLink" download="brooks-intro-call.ics" href="#">Add a tentative hold to your calendar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="contact">
   <div class="wrap cgrid">
     <div class="rv">
       <span class="mono tag">Start a conversation</span>
-      <h2 style="margin-top:16px">Tell us where the time <em>goes</em>.</h2>
-      <p style="margin-top:20px">A short note is enough. We’ll come back with a free process review and an honest view of whether AI is the right fix.</p>
+      <h2 style="margin-top:16px">Rather <em>write</em> it down?</h2>
+      <p style="margin-top:20px">Tell us where the time goes. A short note is enough. We’ll come back with a free process review and an honest view of whether AI is the right fix.</p>
       <ol class="next">
         <li>You send a few lines about your business and bottlenecks.</li>
         <li>We reply within two business days to book a short call.</li>
@@ -346,10 +410,11 @@
         </div>
       </fieldset>
       <label><span class="mono">What takes too much time?</span><textarea name="msg" id="msg" rows="5"></textarea></label>
-      <p class="form-note" id="formErr" role="alert" hidden></p>
-      <button class="btn" type="submit">Send &rarr;</button>
-      <p class="form-note">Sending opens your email app with everything filled in.</p>
-      <div class="sent" id="sent" role="status"><h3>Thanks, <em>nearly there.</em></h3><p>Your email app should have opened with your message ready. Just press send and we’ll be in touch within two business days.</p></div>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="form-note err" id="formErr" role="alert" hidden></p>
+      <button class="btn" type="submit">Send message &rarr;</button>
+      <p class="form-note">Prefer to talk? <a href="#book">Pick a time for a call</a>.</p>
+      <div class="sent" id="sent" role="status" tabindex="-1"><span class="mono" style="color:var(--accent)">Message received</span><h3>Thank you. <em>We’re on it.</em></h3><p>We’ll reply within two business days. In the meantime, you can <a href="#book">book a call</a> if you’d like to talk sooner.</p></div>
     </form>
   </div>
 </section>
@@ -362,7 +427,7 @@
       <div><h4>Brooks Process Solutions</h4><p>AI implementation for operations, marketing, sales and lead generation. Process first, technology second.</p></div>
       <div><h4>Explore</h4><a href="#services">Services</a><a href="#use-cases">Use cases</a><a href="#method">Method</a><a href="#work-with-us">Engagements</a></div>
       <div><h4>Tools</h4><a href="#calculator">Time-back calculator</a><a href="#readiness">Readiness check</a><a href="#faq">FAQ</a></div>
-      <div><h4>Contact</h4><a href="#contact">Start a conversation</a><a href="#about">About the founder</a></div>
+      <div><h4>Contact</h4><a href="#book">Book a call</a><a href="#contact">Send a message</a><a href="#about">About the founder</a></div>
     </div>
     <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions</span><a class="totop" href="#top">Back to top ↑</a></div>
   </div>
