@@ -9,7 +9,7 @@
      BOOKING_URL    optional. Paste a Calendly or Cal.com scheduling link (for example
                     'https://calendly.com/your-name/30min') to embed it instead of the
                     built-in request-a-time calendar. */
-  var CONTACT_EMAIL = 'devinbrooks.96@gmail.com';
+  var CONTACT_EMAIL = 'brooksprocesssolutions@gmail.com';
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
   var BOOKING_URL = '';
   var $ = function (s, r) { return (r || document).querySelector(s); };
