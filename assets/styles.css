@@ -2,6 +2,7 @@
    Brooks Process Solutions: editorial "process map" identity
    ========================================================================== */
 :root{
+  color-scheme:only light; /* the design is light-only: stop browsers auto-darkening it */
   --paper:#f1ece1; --paper2:#e8e1d2; --paper3:#ddd4c1; --ink:#15181d; --ink2:#4a4f58; --rule:#15181d22;
   --accent:#d9481c; --accent-soft:#ff8a5c; --deep:#16382f;
   --serif:"Fraunces",Georgia,serif; --sans:"Inter Tight",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
