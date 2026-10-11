@@ -343,8 +343,12 @@
     errEl.hidden = true;
     return true;
   }
-  function showFailure(errEl, subject, fields) {
-    errEl.innerHTML = 'Sorry, that didn’t send. Please try again, or <a href="#">email us directly</a>.';
+  function showFailure(errEl, subject, fields, error) {
+    var reason = (error && error.message) || '';
+    if (window.console) console.warn('Form delivery failed:', reason);
+    errEl.innerHTML = /activat/i.test(reason)
+      ? 'This form hasn’t been activated yet. The site owner needs to click the activation link FormSubmit emailed to ' + CONTACT_EMAIL + '. Meanwhile, you can <a href="#">email us directly</a>.'
+      : 'Sorry, that didn’t send. Please try again, or <a href="#">email us directly</a>.';
     errEl.querySelector('a').href = mailtoHref(subject, fields);
     errEl.hidden = false;
   }
@@ -370,8 +374,8 @@
       form.classList.add('done');
       $('#sent').classList.add('show');
       $('#sent').focus();
-    }).catch(function () {
-      showFailure(err, subject, fields);
+    }).catch(function (e) {
+      showFailure(err, subject, fields, e);
     }).then(function () { busy(btn, false); });
   });
 
@@ -490,8 +494,8 @@
       deliver(subject, fields, fields.Email).then(function () {
         $('#icsLink').href = icsHref(pickedSlot);
         step('done');
-      }).catch(function () {
-        showFailure(berr, subject, fields);
+      }).catch(function (e) {
+        showFailure(berr, subject, fields, e);
       }).then(function () { busy(btn, false); });
     });
 
