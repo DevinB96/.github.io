@@ -203,17 +203,17 @@
   });
 
   /* ---------- calculator ---------- */
-  var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
-  var num = function (n) { return Math.round(n).toLocaleString('en-US'); };
+  var money = function (n) { return '£' + Math.round(n).toLocaleString('en-GB'); };
+  var num = function (n) { return Math.round(n).toLocaleString('en-GB'); };
   var C = { people: $('#c-people'), hours: $('#c-hours'), rate: $('#c-rate'), pct: $('#c-pct') };
   var lastCalc = null;
   function paint(r) { r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%'); }
   function calc() {
     var p = +C.people.value, h = +C.hours.value, rate = +C.rate.value, pct = +C.pct.value / 100;
-    var weekNow = p * h, weekBack = weekNow * pct, year = weekBack * 48, value = year * rate, fte = year / 1800;
+    var weekNow = p * h, weekBack = weekNow * pct, year = weekBack * 46, value = year * rate, fte = year / 1725; // UK: 46 working weeks, 37.5-hour week
     $('#o-people').textContent = p;
     $('#o-hours').textContent = h;
-    $('#o-rate').textContent = '$' + rate;
+    $('#o-rate').textContent = '£' + rate;
     $('#o-pct').textContent = Math.round(pct * 100) + '%';
     $('#r-year').firstChild.nodeValue = num(year);
     $('#r-week').textContent = num(weekBack) + ' hours a week returned to your team';
@@ -230,7 +230,7 @@
   calc();
   $('#calcSend').addEventListener('click', function () {
     var c = lastCalc;
-    blocks.calc = 'My time-back estimate:\n• ' + c.p + ' people × ' + c.h + ' hrs/week of admin at ~$' + c.rate + '/hr\n• Assuming ' + Math.round(c.pct * 100) +
+    blocks.calc = 'My time-back estimate:\n• ' + c.p + ' people × ' + c.h + ' hrs/week of admin at ~£' + c.rate + '/hr\n• Assuming ' + Math.round(c.pct * 100) +
       '% can be automated: ~' + num(c.weekBack) + ' hrs/week, ' + num(c.year) + ' hrs/year, ' + money(c.value) + '/year';
     compose(); goContact();
   });
@@ -385,7 +385,7 @@
   var LEAD_DAYS = 1, WINDOW_DAYS = 28;
   var tz = (function () {
     try {
-      var part = new Intl.DateTimeFormat('en-US', { timeZoneName: 'long' }).formatToParts(new Date())
+      var part = new Intl.DateTimeFormat('en-GB', { timeZoneName: 'long' }).formatToParts(new Date())
         .filter(function (p) { return p.type === 'timeZoneName'; })[0];
       if (part) return part.value;
     } catch (e) { /* fall through */ }
@@ -409,9 +409,9 @@
     var last = new Date(today); last.setDate(last.getDate() + WINDOW_DAYS);
     var viewMonth = new Date(first.getFullYear(), first.getMonth(), 1);
     var picked = null, pickedSlot = null;
-    var dayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-    var monFmt = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' });
-    var timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+    var dayFmt = new Intl.DateTimeFormat('en-GB', { weekday: 'long', month: 'long', day: 'numeric' });
+    var monFmt = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' });
+    var timeFmt = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', minute: '2-digit', hour12: true });
     var bookable = function (d) { var w = d.getDay(); return d >= first && d <= last && w !== 0 && w !== 6; };
     var sameDay = function (a, b) { return a && b && a.toDateString() === b.toDateString(); };
     var slotDate = function (d, h) { var x = new Date(d); x.setHours(h, 0, 0, 0); return x; };
