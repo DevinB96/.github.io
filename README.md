@@ -20,3 +20,9 @@ Static site for Brooks Process Solutions, served by GitHub Pages from `main`.
 | `BOOKING_URL` | Empty: the built-in request-a-time calendar is used. Paste a Calendly or Cal.com link to embed a real scheduler instead |
 
 Forms are delivered by [FormSubmit](https://formsubmit.co). Each address must be activated once, from the live site, by clicking the link FormSubmit emails to it.
+
+## Pages
+
+- `index.html`: the site
+- `privacy.html`: privacy policy, linked from the forms and the footer. Update it if the tools that handle enquiries change.
+- `404.html`: not-found page

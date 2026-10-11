@@ -322,8 +322,8 @@
       <p class="rv">Pick a time that suits you for a free intro call. We’ll talk through where your team’s time goes and whether AI is the right fix. You’ll get a confirmation and video link by email.</p>
     </div>
     <div class="booker rv" id="booker">
-      <aside class="book-info">
-        <span class="mono" style="color:var(--accent)">Intro call</span>
+      <div class="book-info">
+        <span class="mono" style="color:var(--accent-text)">Intro call</span>
         <h3>Free process conversation</h3>
         <dl>
           <div><dt class="mono">Length</dt><dd>30 minutes</dd></div>
@@ -332,7 +332,7 @@
         </dl>
         <p class="mono" style="color:var(--ink2);margin:22px 0 10px">We’ll cover</p>
         <ul class="agenda"><li>How work flows today</li><li>Where time and leads leak</li><li>Two or three first wins</li><li>Whether an audit makes sense</li></ul>
-      </aside>
+      </div>
       <div class="book-stage" id="bookStage">
         <div class="book-step" data-step="pick">
           <div class="cal">
@@ -364,10 +364,11 @@
             <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <p class="form-note err" id="bookErr" role="alert" hidden></p>
             <button class="btn" type="submit">Request this time &rarr;</button>
+            <p class="form-note">We only use your details to arrange the call. See our <a href="privacy.html">privacy policy</a>.</p>
           </form>
         </div>
         <div class="book-step done" data-step="done" hidden>
-          <span class="mono" style="color:var(--accent)">Request sent</span>
+          <span class="mono" style="color:var(--accent-text)">Request sent</span>
           <h3 tabindex="-1" data-focus>You’re pencilled in.</h3>
           <p>We’ve received your request for <strong data-when></strong>. We’ll confirm by email within one business day, with a video link.</p>
           <a class="btn out" id="icsLink" download="brooks-intro-call.ics" href="#">Add a tentative hold to your calendar</a>
@@ -414,8 +415,8 @@
       <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <p class="form-note err" id="formErr" role="alert" hidden></p>
       <button class="btn" type="submit">Send message &rarr;</button>
-      <p class="form-note">Prefer to talk? <a href="#book">Pick a time for a call</a>.</p>
-      <div class="sent" id="sent" role="status" tabindex="-1"><span class="mono" style="color:var(--accent)">Message received</span><h3>Thank you. <em>We’re on it.</em></h3><p>We’ll reply within two business days. In the meantime, you can <a href="#book">book a call</a> if you’d like to talk sooner.</p></div>
+      <p class="form-note">We only use your details to reply to you. See our <a href="privacy.html">privacy policy</a>. Prefer to talk? <a href="#book">Pick a time for a call</a>.</p>
+      <div class="sent" id="sent" role="status" tabindex="-1"><span class="mono" style="color:var(--accent-text)">Message received</span><h3>Thank you. <em>We’re on it.</em></h3><p>We’ll reply within two business days. In the meantime, you can <a href="#book">book a call</a> if you’d like to talk sooner.</p></div>
     </form>
   </div>
 </section>
@@ -425,12 +426,12 @@
   <div class="wrap">
     <div class="big">Less busywork. More <em>business.</em></div>
     <div class="fcols">
-      <div><h4>Brooks Process Solutions</h4><p>AI implementation for operations, marketing, sales and lead generation. Process first, technology second.</p></div>
-      <div><h4>Explore</h4><a href="#services">Services</a><a href="#use-cases">Use cases</a><a href="#method">Method</a><a href="#work-with-us">Engagements</a></div>
-      <div><h4>Tools</h4><a href="#calculator">Time-back calculator</a><a href="#readiness">Readiness check</a><a href="#faq">FAQ</a></div>
-      <div><h4>Contact</h4><a href="#book">Book a call</a><a href="#contact">Send a message</a><a href="#about">About the founder</a></div>
+      <div><h3>Brooks Process Solutions</h3><p>AI implementation for operations, marketing, sales and lead generation. Process first, technology second.</p></div>
+      <div><h3>Explore</h3><a href="#services">Services</a><a href="#use-cases">Use cases</a><a href="#method">Method</a><a href="#work-with-us">Engagements</a></div>
+      <div><h3>Tools</h3><a href="#calculator">Time-back calculator</a><a href="#readiness">Readiness check</a><a href="#faq">FAQ</a></div>
+      <div><h3>Contact</h3><a href="#book">Book a call</a><a href="#contact">Send a message</a><a href="#about">About the founder</a></div>
     </div>
-    <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions</span><a class="totop" href="#top">Back to top ↑</a></div>
+    <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions</span><span><a class="totop" href="privacy.html">Privacy policy</a> · <a class="totop" href="#top">Back to top ↑</a></span></div>
   </div>
 </footer>
 

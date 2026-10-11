@@ -250,7 +250,7 @@
     $('#q-count').textContent = 'Question ' + (step + 1) + ' of ' + QUIZ.length;
     $('#q-bar').style.width = (step / QUIZ.length * 100) + '%';
     back.hidden = step === 0;
-    body.innerHTML = '<span class="mono" style="color:var(--accent)">Q' + (step + 1) + '</span><h3></h3><div class="opts"></div>';
+    body.innerHTML = '<span class="mono" style="color:var(--accent-text)">Q' + (step + 1) + '</span><h3></h3><div class="opts"></div>';
     body.querySelector('h3').textContent = item.q;
     var wrap = body.querySelector('.opts');
     item.o.forEach(function (text, i) {
@@ -291,7 +291,7 @@
       '<div class="score"><svg class="gauge" viewBox="0 0 180 180" role="img" aria-label="Readiness score ' + pct + ' out of 100">' +
       '<circle class="bg" cx="90" cy="90" r="70"/><circle class="fg" cx="90" cy="90" r="70" stroke-dasharray="' + C2 + '" stroke-dashoffset="' + C2 + '"/>' +
       '<text x="90" y="100" text-anchor="middle">' + pct + '</text><text class="of" x="90" y="124" text-anchor="middle">/ 100</text></svg>' +
-      '<div><span class="mono" style="color:var(--accent)">Readiness score</span><h3></h3><p class="d"></p>' +
+      '<div><span class="mono" style="color:var(--accent-text)">Readiness score</span><h3></h3><p class="d"></p>' +
       '<p><strong>Recommended start:</strong> <span class="p"></span><br><strong>Focus area:</strong> <span class="a"></span></p>' +
       '<div class="acts"><button class="btn" type="button" id="q-send">Send me my results &rarr;</button><button class="link" type="button" id="q-restart">Retake</button></div></div></div>';
     body.querySelector('h3').textContent = tier.t;
