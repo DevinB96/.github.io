@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
 <meta property="og:title" content="Brooks Process Solutions | AI Implementation Consulting">
 <meta property="og:description" content="We map the process, then put AI to work in it: operations, marketing, sales and lead generation.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +22,8 @@
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"Brooks Process Solutions",
  "description":"AI implementation consulting for operations, marketing, sales and lead generation.",
  "founder":{"@type":"Person","name":"Devin Brooks"},
+ "address":{"@type":"PostalAddress","addressLocality":"Guildford","addressRegion":"Surrey","addressCountry":"GB"},
+ "areaServed":["Surrey","Hampshire","Berkshire","Sussex","London"],
  "knowsAbout":["AI implementation","Process automation","Marketing automation","Sales automation","Lead generation"]}
 </script>
 </head>
@@ -56,7 +59,7 @@
         <a class="btn" href="#book">Book a free intro call &rarr;</a>
         <a class="btn out" href="#readiness">Take the 2-minute readiness check</a>
       </div>
-      <div class="hero-meta mono"><span>Vendor-neutral</span><span>Human-in-the-loop</span><span>Built into your tools</span></div>
+      <div class="hero-meta mono"><span>Based in Guildford, Surrey</span><span>Vendor-neutral</span><span>Human-in-the-loop</span><span>Built into your tools</span></div>
     </div>
 
     <figure class="figure" aria-label="Diagram: everyday business inputs flow through an AI layer and come out as finished outcomes">
@@ -171,9 +174,9 @@
           <small>Data entry, chasing, scheduling, reporting, copy-and-paste.</small>
         </div>
         <div class="field">
-          <label for="c-rate"><span class="mono">Loaded cost per hour</span><output id="o-rate">$40</output></label>
-          <input type="range" id="c-rate" min="15" max="200" step="5" value="40">
-          <small>Salary plus benefits and overhead, roughly.</small>
+          <label for="c-rate"><span class="mono">Loaded cost per hour</span><output id="o-rate">£25</output></label>
+          <input type="range" id="c-rate" min="10" max="150" step="5" value="25">
+          <small>Salary plus employer National Insurance, pension and overheads, roughly.</small>
         </div>
         <div class="field">
           <label for="c-pct"><span class="mono">Share AI could take on</span><output id="o-pct">35%</output></label>
@@ -186,14 +189,14 @@
         <div class="big" id="r-year">0<small>hrs / year</small></div>
         <div class="sub" id="r-week">0 hours a week returned to your team</div>
         <div class="kpis">
-          <div class="kpi"><span class="mono">Value per year</span><b class="acc" id="r-value">$0</b></div>
+          <div class="kpi"><span class="mono">Value per year</span><b class="acc" id="r-value">£0</b></div>
           <div class="kpi"><span class="mono">Full-time equivalent</span><b id="r-fte">0</b></div>
         </div>
         <div class="bars" aria-hidden="true">
           <div class="barrow"><span class="mono">Today</span><div class="track"><div class="fill" id="b-now"></div></div><span id="b-now-l">0h</span></div>
           <div class="barrow ai"><span class="mono">With AI</span><div class="track"><div class="fill" id="b-ai"></div></div><span id="b-ai-l">0h</span></div>
         </div>
-        <p class="disclaimer">Illustrative estimate based on 48 working weeks and 1,800 hours per full-time role. Real results depend on your processes, and we’ll measure them properly in an audit.</p>
+        <p class="disclaimer">Illustrative estimate based on 46 working weeks a year (after holidays and bank holidays) and 1,725 hours per full-time role (37.5 hours a week). Real results depend on your processes, and we’ll measure them properly in an audit.</p>
         <button class="btn" type="button" id="calcSend" style="margin-top:22px">Send me this estimate &rarr;</button>
       </div>
     </div>
@@ -210,7 +213,7 @@
     <div class="stages">
       <div class="stage rv"><span class="n">1</span><h3>Map</h3><p>We sit with your team and chart the real workflows, including the workarounds nobody wrote down.</p>
         <ul><li>Stakeholder interviews</li><li>Tool &amp; data inventory</li><li>Time-and-friction log</li></ul><span class="mono wk">Output: process map</span></div>
-      <div class="stage rv"><span class="n">2</span><h3>Prioritize</h3><p>Every opportunity is scored on hours saved, revenue impact and effort. You see the shortlist and the reasoning.</p>
+      <div class="stage rv"><span class="n">2</span><h3>Prioritise</h3><p>Every opportunity is scored on hours saved, revenue impact and effort. You see the shortlist and the reasoning.</p>
         <ul><li>Impact × effort scoring</li><li>Risk &amp; data review</li><li>Quick wins flagged</li></ul><span class="mono wk">Output: ranked roadmap</span></div>
       <div class="stage rv"><span class="n">3</span><h3>Build</h3><p>We implement inside the tools you already use, test with real data, and keep a human in the loop where it matters.</p>
         <ul><li>Integrations &amp; automations</li><li>Prompting &amp; guardrails</li><li>Pilot with real work</li></ul><span class="mono wk">Output: working systems</span></div>
@@ -275,7 +278,7 @@
         <a class="btn" href="#contact" data-plan="Implementation Sprint">Plan a sprint</a></div>
       <div class="plan"><span class="mono">Ongoing</span><h3>AI Partner</h3><p>A retained partner who keeps improving your systems as the technology moves.</p>
         <div class="dur mono"><span>Typical length</span><b>Monthly</b></div>
-        <ul><li>Monitoring &amp; optimization</li><li>New workflows each quarter</li><li>Team office hours</li><li>Priority support</li></ul>
+        <ul><li>Monitoring &amp; optimisation</li><li>New workflows each quarter</li><li>Team office hours</li><li>Priority support</li></ul>
         <a class="btn out" href="#contact" data-plan="AI Partner">Discuss a retainer</a></div>
     </div>
   </div>
@@ -431,7 +434,7 @@
       <div><h3>Tools</h3><a href="#calculator">Time-back calculator</a><a href="#readiness">Readiness check</a><a href="#faq">FAQ</a></div>
       <div><h3>Contact</h3><a href="#book">Book a call</a><a href="#contact">Send a message</a><a href="#about">About the founder</a></div>
     </div>
-    <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions</span><span><a class="totop" href="privacy.html">Privacy policy</a> · <a class="totop" href="#top">Back to top ↑</a></span></div>
+    <div class="fbar mono"><span>© <span id="yr">2026</span> Brooks Process Solutions · Guildford, Surrey</span><span><a class="totop" href="privacy.html">Privacy policy</a> · <a class="totop" href="#top">Back to top ↑</a></span></div>
   </div>
 </footer>
 
