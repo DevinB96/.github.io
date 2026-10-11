@@ -3,14 +3,14 @@
   'use strict';
   /* ---------- site configuration ----------
      CONTACT_EMAIL  where enquiries go (also the mailto fallback).
-     FORM_ENDPOINT  FormSubmit AJAX endpoint. The first submission sends an activation
-                    email to CONTACT_EMAIL; after activating, you can swap the address in
-                    this URL for the random alias FormSubmit gives you to keep it private.
+     FORM_ENDPOINT  FormSubmit AJAX endpoint, using the private alias FormSubmit issued for
+                    CONTACT_EMAIL so the address is not in the request URL. To change the
+                    inbox, put the new email here, activate it, then swap in its new alias.
      BOOKING_URL    optional. Paste a Calendly or Cal.com scheduling link (for example
                     'https://calendly.com/your-name/30min') to embed it instead of the
                     built-in request-a-time calendar. */
   var CONTACT_EMAIL = 'brooksprocesssolutions@gmail.com';
-  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
+  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/91353fed478083e64f7aa009c8da68a5';
   var BOOKING_URL = '';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
