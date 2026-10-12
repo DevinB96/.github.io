@@ -442,3 +442,10 @@ footer .big em{color:var(--accent-soft)}
 .sector-card .go{margin-top:auto;color:var(--accent-text)}
 .sector-card:hover{background:var(--paper2)}
 .sector-card:hover .go{text-decoration:underline}
+
+/* Cal.com inline embed */
+.cal-inline{width:100%;min-height:620px;overflow:auto}
+.book-fallback{margin:0;padding:18px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:var(--ink2);border-bottom:1px solid var(--rule)}
+.book-fallback.quiet{padding:10px 22px;font-size:.88rem;order:2;border-bottom:0;border-top:1px solid var(--rule)}
+.book-fallback.quiet .btn{padding:6px 12px;font-size:.85rem}
+#bookStage{display:flex;flex-direction:column}
