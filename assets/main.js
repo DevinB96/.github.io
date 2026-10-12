@@ -314,9 +314,10 @@
   renderQ();
 
   /* ---------- form delivery (shared by contact form and booking) ---------- */
-  // Copy each submission to Make as plain form fields (fire-and-forget; never blocks the form).
+  // Copy each submission to Make as plain form fields. Resolves true once the request has been
+  // delivered (the response is opaque, so a resolved fetch is the only signal), false otherwise.
   function notifyMake(subject, fields) {
-    if (!MAKE_WEBHOOK) return;
+    if (!MAKE_WEBHOOK) return Promise.resolve(false);
     try {
       var body = new URLSearchParams();
       body.append('type', /^Call request/.test(subject) ? 'call_request' : 'enquiry');
@@ -326,11 +327,11 @@
       });
       body.append('page', location.href);
       body.append('submitted_at', new Date().toISOString());
-      fetch(MAKE_WEBHOOK, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
-    } catch (e) { /* ignore */ }
+      return fetch(MAKE_WEBHOOK, { method: 'POST', mode: 'no-cors', keepalive: true, body: body })
+        .then(function () { return true; }, function () { return false; });
+    } catch (e) { return Promise.resolve(false); }
   }
-  function deliver(subject, fields, replyTo) {
-    notifyMake(subject, fields);
+  function sendEmail(subject, fields, replyTo) {
     var payload = { _subject: subject, _template: 'table', _captcha: 'false' };
     if (replyTo) payload._replyto = replyTo;
     Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
@@ -342,6 +343,17 @@
       return r.json().catch(function () { return {}; }).then(function (d) {
         if (!r.ok || String(d.success) !== 'true') throw new Error(d.message || ('Send failed, status ' + r.status));
         return d;
+      });
+    });
+  }
+  // Succeeds if either channel takes the submission: the email (FormSubmit) or the CRM feed (Make).
+  function deliver(subject, fields, replyTo) {
+    var toMake = notifyMake(subject, fields);
+    return sendEmail(subject, fields, replyTo).then(function (d) { return d; }, function (emailErr) {
+      if (window.console) console.warn('Email delivery failed, checking CRM feed:', emailErr && emailErr.message);
+      return toMake.then(function (ok) {
+        if (ok) return { success: 'true', via: 'make' };
+        throw emailErr;
       });
     });
   }
