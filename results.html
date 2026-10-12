@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client results | Brooks Process Solutions</title>
+<meta name="description" content="A live view of what your AI workflows have achieved: time saved, faster replies, more work won.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/sector.css">
+<link rel="stylesheet" href="assets/results.css">
+</head>
+<body class="sector results">
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="./" aria-label="Brooks Process Solutions, home"><i>B</i>Brooks Process Solutions</a>
+    <a class="btn sm out" id="printBtn" href="#">Save as PDF</a>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <div class="demo-note" id="demoNote" hidden>
+    <strong>Example dashboard.</strong> The figures below are illustrative, for a fictional trades firm. Each client gets a private link showing their own numbers.
+    <a href="./#book">Book a call</a> to talk about what yours could look like.
+  </div>
+  <div class="load-note" id="loadNote" role="status" hidden></div>
+
+  <section class="r-head" aria-labelledby="clientName">
+    <div>
+      <span class="mono tag">Results dashboard</span>
+      <h1 id="clientName">Loading…</h1>
+      <dl class="r-meta" id="meta"></dl>
+    </div>
+    <div class="hero-fig" id="hero" hidden>
+      <span class="hero-label" id="heroLabel"></span>
+      <span class="hero-value" id="heroValue"></span>
+      <span class="hero-note" id="heroNote"></span>
+    </div>
+  </section>
+
+  <section aria-labelledby="kpiH" class="r-sec">
+    <h2 id="kpiH" class="r-h">Before and <em>after</em></h2>
+    <div class="kpis-grid" id="kpis"></div>
+  </section>
+
+  <section aria-labelledby="trendH" class="r-sec" id="trendSec">
+    <h2 id="trendH" class="r-h">Month by <em>month</em></h2>
+    <div class="trends" id="trends"></div>
+  </section>
+
+  <div class="r-two">
+    <section aria-labelledby="wfH" class="r-sec">
+      <h2 id="wfH" class="r-h">Workflows</h2>
+      <ul class="wf-list" id="workflows"></ul>
+    </section>
+    <section aria-labelledby="msH" class="r-sec">
+      <h2 id="msH" class="r-h">Milestones</h2>
+      <ol class="ms-list" id="milestones"></ol>
+    </section>
+  </div>
+
+  <p class="r-foot" id="method">Figures are measured from your own systems (inbox, calendar, CRM and job or practice software) and compared with the baseline we recorded during the audit. Money figures are estimates and are labelled as such.</p>
+</main>
+
+<div class="tip" id="tip" role="tooltip" hidden></div>
+
+<footer class="sector-foot">
+  <div class="wrap mono">
+    <span>© 2026 Brooks Process Solutions</span>
+    <span><a href="privacy.html">Privacy policy</a> · <a href="./">Home</a></span>
+  </div>
+</footer>
+<script src="assets/results.js"></script>
+</body>
+</html>
