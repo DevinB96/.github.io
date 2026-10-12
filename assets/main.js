@@ -340,7 +340,7 @@
       body: JSON.stringify(payload)
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (d) {
-        if (!r.ok || String(d.success) !== 'true') throw new Error(d.message || 'Send failed');
+        if (!r.ok || String(d.success) !== 'true') throw new Error(d.message || ('Send failed, status ' + r.status));
         return d;
       });
     });
@@ -369,6 +369,12 @@
       ? 'This form hasn’t been activated yet. The site owner needs to click the activation link FormSubmit emailed to ' + CONTACT_EMAIL + '. Meanwhile, you can <a href="#">email us directly</a>.'
       : 'Sorry, that didn’t send. Please try again, or <a href="#">email us directly</a>.';
     errEl.querySelector('a').href = mailtoHref(subject, fields);
+    if (reason && !/activat/i.test(reason)) {
+      var d = document.createElement('small');
+      d.className = 'err-detail';
+      d.textContent = ' (Reason: ' + reason.slice(0, 160) + ')';
+      errEl.appendChild(d);
+    }
     errEl.hidden = false;
   }
   function busy(btn, on, label) {
