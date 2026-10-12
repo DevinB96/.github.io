@@ -11,7 +11,7 @@
                     built-in request-a-time calendar. */
   var CONTACT_EMAIL = 'brooksprocesssolutions@gmail.com';
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/91353fed478083e64f7aa009c8da68a5';
-  var BOOKING_URL = '';
+  var BOOKING_URL = 'https://cal.com/devin-brooks-ok2jta/free-intro-call';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -394,15 +394,46 @@
   $$('[data-tz]').forEach(function (el) { el.textContent = tz; });
 
   if (BOOKING_URL) {
-    var url = BOOKING_URL + (BOOKING_URL.indexOf('?') === -1 ? '?' : '&') +
-      (/calendly\.com/.test(BOOKING_URL) ? 'embed_type=Inline&hide_gdpr_banner=1&embed_domain=' + location.hostname : 'embed=true');
-    var frame = document.createElement('iframe');
-    frame.src = url;
-    frame.title = 'Book a call';
-    frame.loading = 'lazy';
-    frame.className = 'book-frame';
-    $('#bookStage').textContent = '';
-    $('#bookStage').appendChild(frame);
+    var stage = $('#bookStage');
+    stage.textContent = '';
+    // Fallback link, shown until (and in case) the embed loads.
+    var fallback = document.createElement('p');
+    fallback.className = 'book-fallback';
+    var fbLink = document.createElement('a');
+    fbLink.className = 'btn';
+    fbLink.href = BOOKING_URL;
+    fbLink.target = '_blank';
+    fbLink.rel = 'noopener';
+    fbLink.textContent = 'Open the booking calendar \u2192';
+    fallback.appendChild(document.createTextNode('Loading the booking calendar\u2026 '));
+    fallback.appendChild(fbLink);
+    stage.appendChild(fallback);
+    var calMatch = BOOKING_URL.match(/^https:\/\/(?:app\.)?cal\.com\/(.+?)\/?$/);
+    if (calMatch) {
+      // Cal.com's official inline embed (loads app.cal.com/embed/embed.js).
+      var holder = document.createElement('div');
+      holder.id = 'calInline';
+      holder.className = 'cal-inline';
+      stage.appendChild(holder);
+      (function (C, A, L) { var p = function (a, ar) { a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; } if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      window.Cal('init', 'intro', { origin: 'https://cal.com' });
+      window.Cal.ns.intro('inline', { elementOrSelector: '#calInline', calLink: calMatch[1], config: { layout: 'month_view', theme: 'light' } });
+      window.Cal.ns.intro('ui', { theme: 'light', layout: 'month_view', hideEventTypeDetails: true, cssVarsPerTheme: { light: { 'cal-brand': '#15181d' } } });
+      // Hide the loading line once Cal.com has drawn its iframe.
+      var tries = 0, check = setInterval(function () {
+        if (holder.querySelector('iframe')) { fallback.firstChild.textContent = 'Calendar not showing? '; fallback.classList.add('quiet'); clearInterval(check); }
+        else if (++tries > 40) { fallback.firstChild.textContent = 'The calendar couldn\u2019t load here. '; clearInterval(check); }
+      }, 250);
+    } else {
+      var url = BOOKING_URL + (BOOKING_URL.indexOf('?') === -1 ? '?' : '&') +
+        (/calendly\.com/.test(BOOKING_URL) ? 'embed_type=Inline&hide_gdpr_banner=1&embed_domain=' + location.hostname : 'embed=true');
+      var frame = document.createElement('iframe');
+      frame.src = url;
+      frame.title = 'Book a call';
+      frame.loading = 'lazy';
+      frame.className = 'book-frame';
+      stage.appendChild(frame);
+    }
   } else if (booker) {
     var today = new Date(); today.setHours(0, 0, 0, 0);
     var first = new Date(today); first.setDate(first.getDate() + LEAD_DAYS);
