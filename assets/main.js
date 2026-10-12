@@ -6,12 +6,15 @@
      FORM_ENDPOINT  FormSubmit AJAX endpoint, using the private alias FormSubmit issued for
                     CONTACT_EMAIL so the address is not in the request URL. To change the
                     inbox, put the new email here, activate it, then swap in its new alias.
+     MAKE_WEBHOOK   optional. Make (make.com) custom webhook that also receives every form
+                    submission as simple fields, so it can be added to HubSpot automatically.
      BOOKING_URL    optional. Paste a Calendly or Cal.com scheduling link (for example
                     'https://calendly.com/your-name/30min') to embed it instead of the
                     built-in request-a-time calendar. */
   var CONTACT_EMAIL = 'brooksprocesssolutions@gmail.com';
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/91353fed478083e64f7aa009c8da68a5';
   var BOOKING_URL = 'https://cal.com/devin-brooks-ok2jta/free-intro-call';
+  var MAKE_WEBHOOK = 'https://hook.eu1.make.com/n2tzgpkn5tiwyp5lcjwws9aanp8972dy';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -311,7 +314,23 @@
   renderQ();
 
   /* ---------- form delivery (shared by contact form and booking) ---------- */
+  // Copy each submission to Make as plain form fields (fire-and-forget; never blocks the form).
+  function notifyMake(subject, fields) {
+    if (!MAKE_WEBHOOK) return;
+    try {
+      var body = new URLSearchParams();
+      body.append('type', /^Call request/.test(subject) ? 'call_request' : 'enquiry');
+      body.append('subject', subject);
+      Object.keys(fields).forEach(function (k) {
+        body.append(k.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''), fields[k]);
+      });
+      body.append('page', location.href);
+      body.append('submitted_at', new Date().toISOString());
+      fetch(MAKE_WEBHOOK, { method: 'POST', mode: 'no-cors', keepalive: true, body: body }).catch(function () {});
+    } catch (e) { /* ignore */ }
+  }
   function deliver(subject, fields, replyTo) {
+    notifyMake(subject, fields);
     var payload = { _subject: subject, _template: 'table', _captcha: 'false' };
     if (replyTo) payload._replyto = replyTo;
     Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
