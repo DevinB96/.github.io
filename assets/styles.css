@@ -449,3 +449,18 @@ footer .big em{color:var(--accent-soft)}
 .book-fallback.quiet{padding:10px 22px;font-size:.88rem;order:2;border-bottom:0;border-top:1px solid var(--rule)}
 .book-fallback.quiet .btn{padding:6px 12px;font-size:.85rem}
 #bookStage{display:flex;flex-direction:column}
+
+/* founding client offer */
+.founding .fgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start}
+@media(max-width:900px){.founding .fgrid{grid-template-columns:1fr;gap:32px}}
+.founding .fl{list-style:none;margin:0;padding:0;border-top:1px solid #f1ece144}
+.founding .fl li{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-bottom:1px solid #f1ece122}
+.founding .fl b{color:var(--paper);font-weight:600}
+.founding .fl span{color:#f1ece1cc;font-size:.97rem}
+.founding .fnote{color:var(--accent-soft);margin-top:18px}
+.founding .founding-btn{background:var(--accent-soft);color:var(--ink);border-color:var(--accent-soft)}
+.founding .founding-btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.founding .founding-out{color:var(--paper);border-color:var(--paper)}
+.founding .founding-out:hover{background:var(--paper);color:var(--ink)}
+.founding-pill{display:inline-flex;margin-top:22px;padding:8px 14px;border:1.5px solid var(--accent-text);color:var(--accent-text);text-decoration:none;font-size:.7rem}
+.founding-pill:hover{background:var(--accent-text);color:var(--paper)}
